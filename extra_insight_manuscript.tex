@@ -50,15 +50,21 @@
 % command to indicate text WIP
 \newcommand{\placeholder}{\textbf{(placeholder)}}
 
-\title{Non-coding ultra-strong selection in the human genome varies by regulatory role and phylogenetic conservation}
+\linespread{1.15}
+\title{Global characterization of mutations of large \\
+  selective effect across the human genome}
+%\title{Non-coding ultra-strong selection in the human genome varies by regulatory role and phylogenetic conservation}
 %\leadauthor{Dukler}
 %\shorttitle{ExtRaINSIGHT}
-\author[$\ast$, 1]{Noah Dukler}
-\author[ $\dagger$, 1]{Yi-Fei Huang}
-\author[$\ast$, 2]{Adam Siepel}
+\author[1]{Noah Dukler}
+\author[1]{Mehreen R. Mughal}
+\author[2]{Yi-Fei Huang}
+\author[1]{Adam Siepel}
 
-\affil[$\ast$]{Simons Center for Quantitative Biology, Cold Spring Harbor Laboratory, Cold Spring Harbor, NY}
-\affil[$\dagger$]{Department of Biology and Huck Institutes of the Life Sciences, University Park, PA}
+\linespread{1.15}
+\affil[1]{Simons Center for Quantitative Biology, Cold Spring Harbor Laboratory, Cold Spring Harbor, NY}
+\affil[2]{Department of Biology and Huck Institutes of the Life Sciences, University Park, PA}
+\date{}
 
 \begin{document}
 
@@ -75,38 +81,131 @@ The rapid expansion of human population whole genome sequencing data has resulte
 
 \section*{Introduction}
 
-Recent efforts at cataloging human genetic variation such as the 1000 Genomes Project (cite) and the Simons Genomic Diversity Panel (cite) resulted in extensive annotation of common genetic variants. These variants have illuminated a complex history of migration and admixture, both within modern humans and in their interactions with archaic hominins. Inferring demographic histories and distributions of selective effects have been the two most ubiquitous goals in population genetics, and while common variants have been essential for the former, they have had limited power for the latter. Usually, the presence of purifying selection is detected by a depletion of genetic variation within a region, however common variants are unable to differentiate between sites under weak or strong selection as both will prevent a variant from rising to high frequency in a population (cite). Recent projects with the aim of massively expanding the number of sequenced whole genomes such as (...) have provided an expansive view of rare human variation not previously available. Unlike common variants, rare variants are not efficient for inferring broad population structure but they can be used to differentiate between weak and strong purifying selection (cite).
+Like a gambler, an evolving species has to pay for the chance to win.   In the game of evolution, this payment takes the form of mutation.  As in gambling, the majority of ``draws'' result in a loss (decrease in fitness) with an occasional pay-off (adaptive mutation).  In Haldane's words, deleterious mutation is the price a species pays for the privilege of evolution [CITE].
+% [to paraphrase.....?]
 
-Several approaches have been developed that utilize rare variation data to find collections of sites that show extreme depletion for such variants (cite UNEECON, petrovski 2013, etc. ). One of the most widely used of these is pLI (cite) which uses loss-of-function (LoF) variants to label proteins as being haplo-insufficient (intolerant to single copy loss) or haplosufficent. Rare variation is associated with haplosufficiency because rare variants are almost always heterozygous, thus a depletion of a rare variant is usually observed as intolerance to even a single copy of that variant. Other approaches such as CCR (cite - Havrilla 2019) have improved upon the resolution of pLI, looking for signals of ultra-strong constraint at the sub-domain level. A caveat that was raised in recent commentary has pointed is that approaches like pLI ``reflect the strength of selection acting on heterozygotes and not dominance or haploinsufficiency''(cite - Fuller 2019). Thus signals of constraint from rare variants are actually the product of the dominance coefficient $d$ and the selection coefficient $s$.
+Understanding the impact of new mutations on fitness has has been a major focus of evolutionary genetics for nearly a century (e.g., Haldane, 1927, 1924?). Together with genetic drift and natural selection, mutation is one of  three primary evolutionary forces, and it is the only one that can generate new genetic variation.  In this way, mutation is the "fuel" that enables natural selection to do its work.  Because fitness effects exist on a continuum, the general problem is to characterize the distribution of fitness effects (DFE) of new mutations.  The DFE is central to a wide variety of fundamental problems in evolutionary genetics, including understanding the genetic architecture of complex traits, the emergence of recombination and sex, the behavior of populations held at small size (as with domesticated animals and plants), and the effects of mutational load (Keightley review).
 
-While these methods are all quite powerful, because they exploit the DNA to protein sequence mapping, they apply solely to coding regions. This excludes $\sim 99\%$ of the genome from analysis, excluding a number of interesting regions (including ultra-conserved non-coding elements) from analysis. We developed ExtRaINSIGHT to overcome this limitation, at the cost of some nuance in protein coding regions, by creating a globally applicable model for the probability of observing rare variants in neutrally evolving regions. This work probes the role of strong selection in shaping both coding and non-coding elements stratified by function.
+%[something about human disease]
 
-\section*{Materials and Methods}
-\label{sec:materials:methods}
-\subsection*{Creating a neutral mutation model}
+At the same time, characterizing the DFE is notoriously difficult.  Naturally occurring mutations are rare, they are often difficult to detect, and their fitness effects are hard to measure, especially when subtle (as in most cases).  In model organisms, a variety of innovative experimental techniques have been developed to improve the ability to measure aspects of the DFE, such as mutation accumulation experiments or....
+experimental evolution....mutagenesis.....[check].  In humans, however, the only practical route for characterizing the DFE runs through statistical modeling and population genetic theory [cite Keightley?].
 
-To get a collection of rare variants to serve as a proxy for \textit{de novo} mutations, we filtered the gnomAD (v3) database (cite) keeping SNPs with an allele frequency of $\leq 0.001$. We removed all CpG sites to avoid the effects of methylation on CpG mutation and sites with an average sequencing coverage of $<20$. To calibrate the mutation model we needed a set of neutral regions for which we used the set we defined for the INSIGHT method(cite), lifting over to hg38 when necessary(cite liftOver). Finally, we constructed a set of features per allele at every site in the genome to be used in the mutation model. There were four features in the mutation model: frequency of each possible mutation given the 7-mer context in neutral regions, the log sequencing coverage, percent GC content in a 200bp window centered on the variant, and whether the SNP was in a CpG island based on \placeholder \textit{et al.}. We subsampled $1\%$ of mutations in these neutral regions and fit a logistic model to create a global model of \textit{de novo} mutation probabilities absent selection. To adjust for local factors that cause variation in the mutation rate (e.g. replication timing and recombination rate, cite), we tiled the genome into 50kb bins, then used the neutral variants per focal tile and flanking tiles with the mutation probability predicted from the global model as the only feature (plus an intercept) to produce a locally adjusted estimate of the mutation rate per variant. This procedure provides globally well calibrated estimates of mutation rates across all mutational frequencies (\ref{Sfig:mutation_model_calibration}).
+Over the past two decades, with the sequencing of the human genome and widespread availability of sequencing data for panels of human individuals
+various strategies have been developed
+including 
+divergence across species
+combinations of patterns of polymorphism and divergence
+site frequency spectrum and diffusion theory (Eyre Walker; Boyko; other Bustamante; Huang \& Siepel)
+something with trios?  personal genomes?
+human genetics -- prevalence of disease (Kondrashov)
 
-\subsection*{Estimating the fraction of sites that are intolerant to heterozygous mutation}
-Using our predictions to provide the rate of mutation ($P_i$) for any given site ($i$ under neutrality and assuming independence of sites we can detect deviations from the neutral mutation model by fitting this binomial likelihood model:
+Nevertheless, these strategies have some crucial limitations.  In particular, patterns of variation are strongly influenced by demographic history, especially by population bottlenecks, expansions, and substructure, so that careful demographic modeling is required to isolate the effects of selection.  In addition, the population panels that are typically available---consisting of hundreds to a few thousand individuals---are informative about only a relatively narrow slice of the DFE.  For example, focusing on the case of purifying selection (which generally dominates), strong  selection (such that $-s$ is much larger than $\sim$1\%) will tend to hold variants to such low frequencies in the population that they will not be reliably detectable in these panels, whereas weak selection (such that $-s$ is on the order of $10^{-4}$ or less) will be indistinguishable from random genetic drift.  
 
-\begin{equation}
-\mathcal{L}(\lambda ;\mathbb{Y},\mathbb{P}) = \prod_i ((1-\lambda_s) \cdot P_i)^{Y_i}(1- (1-\lambda_s) P_i)^{1-Y_i}
-\end{equation}
+In the last few years, a number of data sets have been released that 
+push samples sizes of completely sequenced genomes or exomes into the tens of thousands
+[biobank, GNOMAD, what else....?]
+allowing rare variants (with relative frequencies of less than about one in a thousand) to be identified with reasonable confidence.
+These data sets can be used to reliably characterize very strong purifying selection ($-s > 1$\%)
+by allowing identification of statistically significant deficiencies of such rare variants.
 
-\noindent where $\lambda_s$ is the scale factor capturing a depletion of rare genetic variation and $Y_i$ is an indicator variable for the presence of mutation $i$ in the sample. As noted previously, this observed depletion of rare variants is due to both dominance and selection, so $\lambda_s$ represents the fraction of sites where the combination of both factors is sufficiently deleterious for new mutations that even rare variants are not observed. As shorthand for this concept we will refer to $\lambda_s$ as measuring the fraction of sites under ultra-strong selection where larger values correspond to more sites under ultra-strong purifying selection. We then compute both a standard error using the curvature of the likelihood surface and a p-value using a likelihood ratio test for the following hypothesis set.
+(combine with above)
+A number of statistical methods have been developed to identify such variants
+functional elements?  
+leverage these data sets to identify genes that are intolerant to loss-of-function (or protein-truncating?) mutations
 
-\begin{align}
-H_0\text{(no selection) : } & \lambda_s = 0\\
-H_1\text{(under selection) : } & \lambda_s \neq 0
-\end{align}
+Perhaps the most widely used of these 
+pLI (cite the later paper also and distinguish)
+which has been shown to reliably
+distinguish haploinsufficient from ......   dosage sensitive......?
+[something about disease predictivity]
 
-Unlike other approaches (such as pLI) for detecting intolerance to rare variants, ExtRaINSIGHT is agnostic with regard to the functional impact of the rare variants in its database, and thus can be applied to both coding and non-coding regions.
+although, as clarified by Fuller et al., these measures are strictly informative only about the strength of selection against heterozygous mutations.
+and are of limited value in ..... [direct estimation of $s_h$]  owing to length dependency and ....
 
-\subsection*{Calculating the total number of sites under purifying selection}
-By design, ExtRaINSIGHT will not detect weak purifying selection acting upon a region because it analyzes only rare variants. To contrast the relative abundances of weak and strong selection in a set of sites we turn to $\rho$, the metric for fraction of sites under combined weak and strong purifying selection introduced by the INSIGHT method. For this work we calculate $\rho$ using the updated version of INSIGHT, INSIGHT2 (cite). INSIGHT2 is only available on \textit{hg19} so only sites that have a 1-1 mapping between \textit{hg19} and \textit{hg38} are used in all analysis. Furthermore, all annotation sets with more than one million sites were sub-sampled to one million for computational efficiency unless otherwise stated.
+(cite also Petrovski, Utah group, others)
+
+An approach more grounded in population genetic theory has been taken by Cassa et al. and Weghorn et al.
+who have shown that
+many protein-truncating variants (PTVs) in ExAC
+can be remarkably well described the regime of sufficiently strong selection ($-s > \sim$1\%), 
+mutation selection balance appears to hold approximately
+estimates of selection coefficients can be estimated reasonably well purely from the relative frequency with which these mutations are observed in a large population panel. (and the mutation rate)
+
+Importantly, this estimation of $s_h$ based on mutation-selection balance
+is independent of demography because, in this regime, mutant alleles persist in the population for at most a few generations 
+and genetic drift makes a negligible contribution to their allele frequencies
+Therefore, in addition to permitting estimation of larger values of $|s|$ than methods based on the full site frequency spectrum or on rates of cross-species divergence, it requires no demographic modeling
+
+
+%Recent efforts at cataloging human genetic variation such as the 1000 Genomes Project (cite) and the Simons Genomic Diversity Panel (cite) resulted in extensive annotation of common genetic variants. These variants have illuminated a complex history of migration and admixture, both within modern humans and in their interactions with archaic hominins. Inferring demographic histories and distributions of selective effects have been the two most ubiquitous goals in population genetics, and while common variants have been essential for the former, they have had limited power for the latter. Usually, the presence of purifying selection is detected by a depletion of genetic variation within a region, however common variants are unable to differentiate between sites under weak or strong selection as both will prevent a variant from rising to high frequency in a population (cite). Recent projects with the aim of massively expanding the number of sequenced whole genomes such as (...) have provided an expansive view of rare human variation not previously available. Unlike common variants, rare variants are not efficient for inferring broad population structure but they can be used to differentiate between weak and strong purifying selection (cite).
+
+%Several approaches have been developed that utilize rare variation data to find collections of sites that show extreme depletion for such variants (cite UNEECON, petrovski 2013, etc. ). One of the most widely used of these is pLI (cite) which uses loss-of-function (LoF) variants to label proteins as being haplo-insufficient (intolerant to single copy loss) or haplosufficent. Rare variation is associated with haplosufficiency because rare variants are almost always heterozygous, thus a depletion of a rare variant is usually observed as intolerance to even a single copy of that variant. Other approaches such as CCR (cite - Havrilla 2019) have improved upon the resolution of pLI, looking for signals of ultra-strong constraint at the sub-domain level. A caveat that was raised in recent commentary has pointed is that approaches like pLI ``reflect the strength of selection acting on heterozygotes and not dominance or haploinsufficiency''(cite - Fuller 2019). Thus signals of constraint from rare variants are actually the product of the dominance coefficient $d$ and the selection coefficient $s$.
+
+%While these methods are all quite powerful, because they exploit the DNA to protein sequence mapping, they apply solely to coding regions. This excludes $\sim 99\%$ of the genome from analysis, excluding a number of interesting regions (including ultra-conserved non-coding elements) from analysis. We developed ExtRaINSIGHT to overcome this limitation, at the cost of some nuance in protein coding regions, by creating a globally applicable model for the probability of observing rare variants in neutrally evolving regions. This work probes the role of strong selection in shaping both coding and non-coding elements stratified by function.
 
 \section*{Results}
+
+\subsection*{Overview of ExtRaINSIGHT}
+
+The conceptual basis of ExtRaINSIGHT is straightforward: the method attempts to measure the fractional reduction in the presence of rare variants in a target set of sites relative to nearby sites that are putatively free from (direct) effects of natural selection.  
+
+In this way, the method is analogous to classical approaches such as the measurement of Ka/Ks (or dn/ds) from alignments of divergent protein-coding sequences or of XXXX (Crow),
+and to newer methods that compare target sets of noncoding elements with suitable background sequences in terms of divergence (CITE phastCons, phyloP, GERP), polymorphism (CITE Ekta, Huang, others), or polymorphism and divergence (CITE INSIGHT, LASSIE),
+but the focus on rare variants (here, variants with minor allele frequencies of $< 0.1$\%) enables the method to shed light on mutations of large selective effect.
+
+The main challenge in this approach stems from the high sensitivity of relative rates of rare variants to variation in mutation rate.  To address this problem, we follow Lek et al...... (others?)
+and make use of a 
+hexamer model.....
+
+In addition, following our earlier work (cite), we use a local control for mutation rate
+by identifying collections of sites likely to be neutrally evolving (by liberally excluding annotated functional elements and other sites likely to be under selection; see Methods)
+and including in the model a scale factor for mutation rate at each target sites based on nearby ``neutral'' sites
+
+With this strategy,
+we are able to predict with high accuracy the probability that a rare variant will occur at each site
+denoted $P_i$
+%[show validation experiment]
+
+%%%
+
+In the absence of natural selection, we assume a  binomial sampling model for the presence (probability Pi) or absence (probably $1-P_i$) of a rare variant at each site $i$, excluding sites at which common variants occur (similar to.... GNOMAD).
+where $P_i$ is determined by the local sequence context and local rate constant.  Assuming independence, the probability of a collection of nucleotide sites is given by,
+\begin{equation}
+P(\mathbb{Y}; \mathbb{P}) = \prod_i P_i^{Y_i}(1-P_i)^{1-Y_i}
+\end{equation}
+\noindent where $Y_i$ is an indicator variable for the presence of a rare variant at position $i$ in the sample.
+
+We then assume that natural selection has the effect of imposing a fractional reduction on the rate at which rare variants occur.  that is,....
+\begin{equation}
+  P(\mathbb{Y}; \lambda_s, \mathbb{P}) = \prod_i ((1-\lambda_s) P_i)^{Y_i}(1- (1-\lambda_s) P_i)^{1-Y_i}
+\end{equation}
+\noindent where $\lambda_s$ is the scale factor capturing a depletion of rare genetic variation.
+
+Here, when $\lambda_s$ falls between 0 and 1 it can be interpreted as a measure of the prevalence of strong purifying selection,
+i.e., selection sufficiently strong that mutations are either lethal and never occur or tend to be eliminated within a few generations and are never allowed to drift to appreciable frequency
+This value can be thought of as fraction of sites intolerant to heterozygous mutants, although in practice, some sites may be more, and some sites less, intolerant
+
+Notice, however, that $\lambda_s$ can also take values $<0$
+suggesting that rare variants are occurring at a higher-than-expected rate in a target set of sites
+As we discuss below, we do observe a systematic tendency for lambda to take negative values in particular classes of sites, likely reflecting the difficulty of precisely specifying the mutational model at these sites.
+Across most of the genome, however, estimates of lambda fall between 0 and 1 and show general qualitative agreement with what is expected for various types of functional elements.
+
+%---
+%(now switch to popgen theory)
+Notably, in the case of strong selection against heterozygotes and mutation-selection balance (as studied by [refs]),
+a relatively simple nonlinear relationship can be established between $\lambda_s$ and the (average) site-specific selection coefficient against heterozygous mutations, $s_h$:    ......     [maybe leave constants vague]     [show in a figure]
+where $c$ is a constant that depends on the relative values of the per-generation mutation rate and the rate of presence of rare variants, $P_i$ (see Methods).
+% just say ratio
+
+Following the example of Weghorn et al., we carried out a series of simulations 
+under various values of $s_h$, 
+a plausible demographic model (?)
+and found that this approximate relationship was fairly accurate down to about $s_h = 10^{-2}$ (check)
+The observation parallels and is similar to the one reported by Weghorn et al. but.... [differences]
+In addition, we  found that the estimator was reasonably robust to variation across sites in mutation rate and in $s_h$ (Suppl Figs)   [other stuff], serving as a good indicator of the average $s_h$ at the target set of sites in such cases
+Thus, for values of $\lambda_s$ larger than about 0.15 (CHECK), we can obtain a good estimate of the corresponding average sitewise selection coefficient.
+%[indicate on the plot the approximate threshold of interest]
 
 \subsection*{ExtRaINSIGHT is consistent with other measures of strong coding constraint}
 As a validation for ExtRaINSIGHT we compared it with another method for detecting genes that were intolerant to heterozygous loss of function (LoF) variants, pLI. Genes were classified as rare variant tolerant (pLI $\leq 0.1$) or intolerant (pLI $\geq 0.9$). ExtRaINSIGHT found similar results to pLI using all CDS sites, with a larger fraction of sites being intolerant of heterozygous variants in genes that were classified as rare variant intolerant by pLI.  (As a secondary validation do we want to estimate per gene extraINSIGHT scores and show they similar, but probably slightly worse than pLI at prioritizing known recessive disease genes?) 
@@ -133,6 +232,31 @@ If UCNEs show unexpectedly little evidence of ultra-strong selection, HARs show 
 \subsection*{Neutral mutation model mis-specification is observed due to hyper-local mutation rate variation is associated with TF binding}
 
 ExtRaINSIGHT relies upon a neutral mutation model calibrated using putatively neutral regions to make inferences about whether a given set of sites is depleted or enriched for ultra-rare variants. In addition to sequence context the model adjusts for local mutation rate variation and excludes CpG sites to avoid issues arising from methylation dependent variation in mutation rate. This model is globally well calibrated across the whole spectrum of predicted mutation probabilities (supplemental figure 2). Despite this we observed that sets of sites that we would expect to be under selection were in fact inferred to have excesses of rare variation. This effect was most pronounced in the 1kb directly upstream of transcription start sites (TSS) and to a far lesser degree at 4D sites but not near the transcription termination sites (TTS)( \prettyref{fig:mutation_model_misspec} ). Given that it has been shown that proximal promoter region is under purifying selection (cite) we hypothesized that this is due to a local elevation of mutation rates directly upstream of TSS  (as has been shown in other species?(cite)). We further narrowed our focus to TFBS which have been previously observed to have elevated mutation rates (cite). When we looked within cannonical TFBS motifs we observed an excess of rare variants, even more so than in the X bp directly flankning the TFBS. This suggests that there are hyper-local determinants of mutation rate, in this case likely that the binding of TFs is itself mutagenic (cite). This poses a fundamental problem, all neutral models to date assume that mutation and function that exposes genomic sequence to selection can be decoupled for the purposes of estimating a neutral model, which does not hold here as TF binding is both inherently functional and mutagenic. Addressing this challenge will be critical not only for traditional evolutionary models but particularly for application in oncogenomics where excess mutations could give false signals of recurrent mutation leading to erroneous identification of cancer drivers (see discussion).
+
+\section*{Methods}
+\label{sec:materials:methods}
+\subsection*{Creating a neutral mutation model}
+
+To get a collection of rare variants to serve as a proxy for \textit{de novo} mutations, we filtered the gnomAD (v3) database (cite) keeping SNPs with an allele frequency of $\leq 0.001$. We removed all CpG sites to avoid the effects of methylation on CpG mutation and sites with an average sequencing coverage of $<20$. To calibrate the mutation model we needed a set of neutral regions for which we used the set we defined for the INSIGHT method(cite), lifting over to hg38 when necessary(cite liftOver). Finally, we constructed a set of features per allele at every site in the genome to be used in the mutation model. There were four features in the mutation model: frequency of each possible mutation given the 7-mer context in neutral regions, the log sequencing coverage, percent GC content in a 200bp window centered on the variant, and whether the SNP was in a CpG island based on \placeholder \textit{et al.}. We subsampled $1\%$ of mutations in these neutral regions and fit a logistic model to create a global model of \textit{de novo} mutation probabilities absent selection. To adjust for local factors that cause variation in the mutation rate (e.g. replication timing and recombination rate, cite), we tiled the genome into 50kb bins, then used the neutral variants per focal tile and flanking tiles with the mutation probability predicted from the global model as the only feature (plus an intercept) to produce a locally adjusted estimate of the mutation rate per variant. This procedure provides globally well calibrated estimates of mutation rates across all mutational frequencies (\ref{Sfig:mutation_model_calibration}).
+
+\subsection*{Estimating the fraction of sites that are intolerant to heterozygous mutation}
+Using our predictions to provide the rate of mutation ($P_i$) for any given site ($i$ under neutrality and assuming independence of sites we can detect deviations from the neutral mutation model by fitting this binomial likelihood model:
+
+\begin{equation}
+\mathcal{L}(\lambda ;\mathbb{Y},\mathbb{P}) = \prod_i ((1-\lambda_s) \cdot P_i)^{Y_i}(1- (1-\lambda_s) P_i)^{1-Y_i}
+\end{equation}
+
+\noindent where $\lambda_s$ is the scale factor capturing a depletion of rare genetic variation and $Y_i$ is an indicator variable for the presence of mutation $i$ in the sample. As noted previously, this observed depletion of rare variants is due to both dominance and selection, so $\lambda_s$ represents the fraction of sites where the combination of both factors is sufficiently deleterious for new mutations that even rare variants are not observed. As shorthand for this concept we will refer to $\lambda_s$ as measuring the fraction of sites under ultra-strong selection where larger values correspond to more sites under ultra-strong purifying selection. We then compute both a standard error using the curvature of the likelihood surface and a p-value using a likelihood ratio test for the following hypothesis set.
+
+\begin{align}
+H_0\text{(no selection) : } & \lambda_s = 0\\
+H_1\text{(under selection) : } & \lambda_s \neq 0
+\end{align}
+
+Unlike other approaches (such as pLI) for detecting intolerance to rare variants, ExtRaINSIGHT is agnostic with regard to the functional impact of the rare variants in its database, and thus can be applied to both coding and non-coding regions.
+
+\subsection*{Calculating the total number of sites under purifying selection}
+By design, ExtRaINSIGHT will not detect weak purifying selection acting upon a region because it analyzes only rare variants. To contrast the relative abundances of weak and strong selection in a set of sites we turn to $\rho$, the metric for fraction of sites under combined weak and strong purifying selection introduced by the INSIGHT method. For this work we calculate $\rho$ using the updated version of INSIGHT, INSIGHT2 (cite). INSIGHT2 is only available on \textit{hg19} so only sites that have a 1-1 mapping between \textit{hg19} and \textit{hg38} are used in all analysis. Furthermore, all annotation sets with more than one million sites were sub-sampled to one million for computational efficiency unless otherwise stated.
 
 \section*{Discussion}
 
