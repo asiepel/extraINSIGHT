@@ -1,6 +1,18 @@
-\documentclass[times, twoside, watermark]{zHenriquesLab-StyleBioRxiv}
-\usepackage{booktabs}
-\usepackage{lineno}
+\documentclass[11pt]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{url}
+\urlstyle{rm}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{authblk}
+\usepackage{cite}
+
+%\documentclass[times, twoside, watermark]{zHenriquesLab-StyleBioRxiv}
+%\usepackage{booktabs}
+%\usepackage{lineno}
 \usepackage{xr}
 
 % To handle cross-referencing between documents
@@ -20,6 +32,16 @@
 
 \myexternaldocument{extra_insight_supplement}
 
+\renewcommand{\baselinestretch}{1.5} % line spacing
+\setlength{\parskip}{1em} % paragraph spacings
+\renewcommand\Authfont{\fontsize{10}{10}\selectfont} % author font size
+\renewcommand\Affilfont{\fontsize{9}{9}\selectfont} % affil font size
+%\renewcommand{\abstractname}{\vspace{-\baselineskip}} % remove abstract
+%\usepackage{caption}
+%\captionsetup{font={large,stretch=1}} % legend font size and spacing
+
+\newcommand{\mathbb}[1]{\boldsymbol{\mathbf{#1}}}
+
 % add this for ref animation
 \usepackage{prettyref}
 \newrefformat{Sfig}{fig. S\ref{#1}}
@@ -29,11 +51,11 @@
 \newcommand{\placeholder}{\textbf{(placeholder)}}
 
 \title{Non-coding ultra-strong selection in the human genome varies by regulatory role and phylogenetic conservation}
-\leadauthor{Dukler}
-\shorttitle{ExtRaINSIGHT}
+%\leadauthor{Dukler}
+%\shorttitle{ExtRaINSIGHT}
 \author[$\ast$, 1]{Noah Dukler}
 \author[ $\dagger$, 1]{Yi-Fei Huang}
-\author[$\ast$, 2, \Letter]{Adam Siepel}
+\author[$\ast$, 2]{Adam Siepel}
 
 \affil[$\ast$]{Simons Center for Quantitative Biology, Cold Spring Harbor Laboratory, Cold Spring Harbor, NY}
 \affil[$\dagger$]{Department of Biology and Huck Institutes of the Life Sciences, University Park, PA}
@@ -42,9 +64,9 @@
 
 \maketitle
 
-\begin{keywords}
-Selection | Population Genetics | Human Genetics
-\end{keywords}
+%\begin{keywords}
+%Selection | Population Genetics | Human Genetics
+%\end{keywords}
 
 \begin{abstract}
 The rapid expansion of human population whole genome sequencing data has resulted in an extensive catalog of rare variation. We use this rare variation as a proxy for \textit{de novo} mutation and construct a context-dependent model to predict rates of mutation genome-wide. The model also implicitly corrects for local factors, like replication timing, which are known to influence mutation rate using variation in the rates of rare variants in proximal neutral regions. We then compare the predicted versus observed rates of rare variation for groups of elements and discover those with fewer rare variants than expected. This depletion in rare variation is caused by strong purifying selection on the collection of elements where any mutation results in a large fitness penalty. We contrast this measure of strong selection with a measure of generalized selection to estimate the relative fraction of sites under weak and strong selection across both coding and non-coding regions. Consistent with previous work we find that the genes associated with neuronal function are most strongly depleted for rare variation while those associated with reproduction enriched relative the genomic background. By applying our method to non-coding regions we find that splice sites are the most strongly conserved followed by conserved microRNAs which show less variation than non-degenerate coding regions. Surprisingly we observe relatively little ultra-strong selection in humans in non-coding regions that show strict and deep phylogenetic conservation suggesting that they may be maintained by either pervasive weak selection or are tolerant to heterozygous mutation.  We also observed excess rare variation across a variety of elements that are inherently tied to biochemical function indicating that improvements in separating selection and mutation will require new approaches. Finally we have made the method we developed for this analysis, ExtRaINSIGHT, available as a web-tool for others to use.
@@ -57,7 +79,7 @@ Recent efforts at cataloging human genetic variation such as the 1000 Genomes Pr
 
 Several approaches have been developed that utilize rare variation data to find collections of sites that show extreme depletion for such variants (cite UNEECON, petrovski 2013, etc. ). One of the most widely used of these is pLI (cite) which uses loss-of-function (LoF) variants to label proteins as being haplo-insufficient (intolerant to single copy loss) or haplosufficent. Rare variation is associated with haplosufficiency because rare variants are almost always heterozygous, thus a depletion of a rare variant is usually observed as intolerance to even a single copy of that variant. Other approaches such as CCR (cite - Havrilla 2019) have improved upon the resolution of pLI, looking for signals of ultra-strong constraint at the sub-domain level. A caveat that was raised in recent commentary has pointed is that approaches like pLI ``reflect the strength of selection acting on heterozygotes and not dominance or haploinsufficiency''(cite - Fuller 2019). Thus signals of constraint from rare variants are actually the product of the dominance coefficient $d$ and the selection coefficient $s$.
 
-While these methods are all quite powerful, because they exploit the DNA to protein sequence mapping, they apply solely to coding regions. This excludes $\backsim 99\%$ of the genome from analysis, excluding a number of interesting regions (including ultra-conserved non-coding elements) from analysis. We developed ExtRaINSIGHT to overcome this limitation, at the cost of some nuance in protein coding regions, by creating a globally applicable model for the probability of observing rare variants in neutrally evolving regions. This work probes the role of strong selection in shaping both coding and non-coding elements stratified by function.
+While these methods are all quite powerful, because they exploit the DNA to protein sequence mapping, they apply solely to coding regions. This excludes $\sim 99\%$ of the genome from analysis, excluding a number of interesting regions (including ultra-conserved non-coding elements) from analysis. We developed ExtRaINSIGHT to overcome this limitation, at the cost of some nuance in protein coding regions, by creating a globally applicable model for the probability of observing rare variants in neutrally evolving regions. This work probes the role of strong selection in shaping both coding and non-coding elements stratified by function.
 
 \section*{Materials and Methods}
 \label{sec:materials:methods}
@@ -91,7 +113,34 @@ As a validation for ExtRaINSIGHT we compared it with another method for detectin
 
 We then sought to estimate the relative fraction of sites under strong vs. weak selection by taking the ratio of $\lambda_s$ and $\rho$, a measure of the combined fraction of weak and strong selection presented in INSIGHT (cite). This ratio serves two purposes (1) de-convolving the relative contributions of weak and strong selection to the observed pattern of polymorphism and (2) controlling for the fraction of sites under purifying selection, allowing for more rigorous comparisons across annotations of varying quality. To have a baseline against which to compare the relative roles of weak and strong selection we estimate $\rho$ and $\lambda_s$ for coding and non-coding regions on a random subset of fifteen million sites for each. Using INSIGHT2 we find estimates of generalized purifying selection ( $\rho$ ) of $0.62$ for coding regions and $0.07$ consistent with previous findings. Applying ExtRaINSIGHT, we obtained estimates of $0.145$ and $0.008$ for the fraction of sites under ultra-strong selection for coding and non-coding sites, respectively. By taking the ratio $\frac{\lambda_s}{\rho}$, we find that $23.3\%$ of sites under purifying selection are under ultra-strong selection. In contrast the same calculation for non-coding elements results in an estimate of only $11.5\%$. Thus we find that strong selection is roughly twice as prevalent in coding elements as non-coding elements.
 
-With this genome-wide baseline in hand we do the same calculation for the two categories of pLI genes previously described. Not only do genes high pLI scores show larger fraction of sites under purifying selection than those with low scores ($\backsim 0.76$ vs. $\backsim 0.6$), sites that are under purifying selection are roughly two and half times as likely to be under ultra-strong selection. This is consistent with the expectation organismal fitness is less impacted by single copy mutations in genes with low pLI, even those in functionally important sites, than those with high pLI scores.
+With this genome-wide baseline in hand we do the same calculation for the two categories of pLI genes previously described. Not only do genes high pLI scores show larger fraction of sites under purifying selection than those with low scores ($\sim 0.76$ vs. $\sim 0.6$), sites that are under purifying selection are roughly two and half times as likely to be under ultra-strong selection. This is consistent with the expectation organismal fitness is less impacted by single copy mutations in genes with low pLI, even those in functionally important sites, than those with high pLI scores.
+
+\subsection*{Excess strong selection in neuronal genes}
+
+Previous works has shown that the strength of selection on coding sequence varies between different classes of genes. We sought to investigate this with ExtRaINSIGHT by subdividing genes into distinct functional groups using top-level Reactome annotations and estimating the amount of ultra-strong selection in each class. Gene associated with neuronal system showed the highest relative abundance of strong selection in line with previous work studying autism showing that strong selection is prevalent in neuronal genes (cite pLI, ExAC?)(\prettyref{fig:reactome}). Autophagy was the next most enriched category of genes, likely because of the documented role of autophagy genes in neurodegenerative disorders (Stamatoku et al. 2020). Other categories that showed relatively large fractions of sites under ultra-strong selection include muscle contraction, DNA replication genes, and metabolism of RNA. Metabolism of RNA includes the genes responsible for splicing, so it is perhaps not surprising to see them here as splice sites themselves are particularly intolerant to mutation (cite Zhang 2018). Surprisingly, given that they are the canonical example for dosage sensitive genes (cite), genes annotated as being involved in gene expression (largely TFs) were not among those most enriched for strong selection. At the other extreme genes associated with reproduction showed the smallest role for strong selection as has been previously reported (cite). Unsurprisingly, metabolic genes, the canonical example for dosage insensitive genes, were also near the bottom of the list.
+
+Where possible we sought to confirm these results using tissue specific gene expression as a source for orthogonal annotations. Genes were annotated as being specific to a given tissue using the ZZZ metric (cite) computed from GTEx data. All the genes most enriched for strong selection were tissue specific to various regions of the brain (\prettyref{Sfig:tissue_specific_scores}) supporting our previously seen enrichment for strong selection in nervous system genes. For reproductive genes the evidence is more mixed with neither ovaries nor testis coming out at the bottom of the list. (Not sure how to wrap this up)
+
+\subsection*{Conserved microRNAs are strongly constrained}
+While ExtRaINSIGHT can be applied to coding regions it distinguishes itself from previous work by being equally applicable to non-coding regions. However, one of the major challenges of studying the relative role of selection between types of non-coding sequence is the varying imprecision of most non-coding annotations. Thus, to investigate the role of ultra-strong in non-coding regions we chose core splice sites and microRNAs because of their characterized biochemical function and contrasted them with 1D coding sequence. Splice sites were under incredibly strong selection with $\sim45\%$ of sites being depleted for rare variation, twice the rate seen in 1D CDS. Both seed and non-seed regions of conserved microRNAs also showed $50\%-70\%$more strong selection than 1D CDS (\prettyref{fig:micro_rnas}A). This is likely due to the extreme dependence of microRNA function on a specific sequence and the highly pleiotropic effects of disrupting one (cite). In contrast, non-conserved microRNAs no evidence of strong selection.
+
+\subsection*{Human accelerated and ultra-conserved regions show surprisingly similar amounts of ultra-strong selection}
+
+Next we investigated two types of regions under dramatically different patterns of phylogenetic constraint. Ultra-conserved non-coding elements (UCNEs) are defined by extreme sequence conservation across broad swaths of phylogenetic time. In contrast human accelerated regions (HARs) show an excess of substitutions along the human lineage suggesting adaptation may be taking place (Pollard et al 2006). Naively we would expect that UCNEs would be extremely intolerant to mutation becasue of their deep conservation however that is not the case. Only $\sim 9\%$ of sites in UCNEs show evidence of ultra-strong purifying selection (\prettyref{fig:micro_rnas}B). There are several possible explanations for this: (1) UCNEs may largely be haplosufficent so heterzyogous variation is well tolerated, or (2) that UCNEs are under pervasive weak selection such that mutations are tolerated at the individual level but are sufficient to maintain near sequence identity across phylogenetic time. There is some evidence for this based on work in mice where deletions of UCNEs yielded viable and fertile individuals with no other obvious phenotypic defects (Ahituv et al. 2007). More recent work has provided examples of UCNEs that are haploinsufficient (Bhatia et al. 2013) or whose homozygous deletion leads to developmental defects (Dickel et al. 2018) but even in these cases individuals with these defects remained viable and fertile.
+
+If UCNEs show unexpectedly little evidence of ultra-strong selection, HARs show a surprising amount despite also being almost entirely non-coding. Roughly $5\%$ of sites in HARs show ultra-strong selection, half that of UCNEs, despite being much more recently evolved. Several lines of evidence have implicated HARs in neuronal function with mutations in those regions being associated with cognitive disorders (Doan et al. 2016, Won et al 2019, Ryu et al 2018). This shows that just because function is recently evolved does not preclude it from being under ultra strong selection. 
+
+\subsection*{Neutral mutation model mis-specification is observed due to hyper-local mutation rate variation is associated with TF binding}
+
+ExtRaINSIGHT relies upon a neutral mutation model calibrated using putatively neutral regions to make inferences about whether a given set of sites is depleted or enriched for ultra-rare variants. In addition to sequence context the model adjusts for local mutation rate variation and excludes CpG sites to avoid issues arising from methylation dependent variation in mutation rate. This model is globally well calibrated across the whole spectrum of predicted mutation probabilities (supplemental figure 2). Despite this we observed that sets of sites that we would expect to be under selection were in fact inferred to have excesses of rare variation. This effect was most pronounced in the 1kb directly upstream of transcription start sites (TSS) and to a far lesser degree at 4D sites but not near the transcription termination sites (TTS)( \prettyref{fig:mutation_model_misspec} ). Given that it has been shown that proximal promoter region is under purifying selection (cite) we hypothesized that this is due to a local elevation of mutation rates directly upstream of TSS  (as has been shown in other species?(cite)). We further narrowed our focus to TFBS which have been previously observed to have elevated mutation rates (cite). When we looked within cannonical TFBS motifs we observed an excess of rare variants, even more so than in the X bp directly flankning the TFBS. This suggests that there are hyper-local determinants of mutation rate, in this case likely that the binding of TFs is itself mutagenic (cite). This poses a fundamental problem, all neutral models to date assume that mutation and function that exposes genomic sequence to selection can be decoupled for the purposes of estimating a neutral model, which does not hold here as TF binding is both inherently functional and mutagenic. Addressing this challenge will be critical not only for traditional evolutionary models but particularly for application in oncogenomics where excess mutations could give false signals of recurrent mutation leading to erroneous identification of cancer drivers (see discussion).
+
+\section*{Discussion}
+
+\subsection*{Data Availability}
+
+ExtRaINSIGHT and INSIGHT2 scores can be computed for a set of annotations using the ExtRaINSIGHT web portal at \url{http://compgen.cshl.edu/extrainsight}. All pipeline and analysis for this paper can be viewed on github at \placeholder.
+
+\bibliography{example-bibliography}
 
 \begin{figure*}[t]
     \centering
@@ -103,20 +152,14 @@ With this genome-wide baseline in hand we do the same calculation for the two ca
 \begin{table*}[t]
     \centering
 	\begin{tabular}{@{}llll@{}}
-		\toprule
-		Region     & $\rho$ & $\lambda_s$ & ratio  \\ \midrule
+%		\toprule
+		Region     & $\rho$ & $\lambda_s$ & ratio  \\ %\midrule
 		Coding     & 0.6219 & 0.1449     & 0.2330 \\
-		Non-coding & 0.0664 & 0.0076     & 0.1150 \\ \bottomrule
+		Non-coding & 0.0664 & 0.0076     & 0.1150 \\ %\bottomrule
 	\end{tabular}
 	\caption{\textbf{Genome-wide estimates of generalized and strong selection.} Estimates were computed using  based on a random set 15 million sites per category. }
 	\label{tab:genome_wide_scores}
 \end{table*}
-
-\subsection*{Excess strong selection in neuronal genes}
-
-Previous works has shown that the strength of selection on coding sequence varies between different classes of genes. We sought to investigate this with ExtRaINSIGHT by subdividing genes into distinct functional groups using top-level Reactome annotations and estimating the amount of ultra-strong selection in each class. Gene associated with neuronal system showed the highest relative abundance of strong selection in line with previous work studying autism showing that strong selection is prevalent in neuronal genes (cite pLI, ExAC?)(\prettyref{fig:reactome}). Autophagy was the next most enriched category of genes, likely because of the documented role of autophagy genes in neurodegenerative disorders (Stamatoku et al. 2020). Other categories that showed relatively large fractions of sites under ultra-strong selection include muscle contraction, DNA replication genes, and metabolism of RNA. Metabolism of RNA includes the genes responsible for splicing, so it is perhaps not surprising to see them here as splice sites themselves are particularly intolerant to mutation (cite Zhang 2018). Surprisingly, given that they are the canonical example for dosage sensitive genes (cite), genes annotated as being involved in gene expression (largely TFs) were not among those most enriched for strong selection. At the other extreme genes associated with reproduction showed the smallest role for strong selection as has been previously reported (cite). Unsurprisingly, metabolic genes, the canonical example for dosage insensitive genes, were also near the bottom of the list.
-
-Where possible we sought to confirm these results using tissue specific gene expression as a source for orthogonal annotations. Genes were annotated as being specific to a given tissue using the ZZZ metric (cite) computed from GTEx data. All the genes most enriched for strong selection were tissue specific to various regions of the brain (\prettyref{Sfig:tissue_specific_scores}) supporting our previously seen enrichment for strong selection in nervous system genes. For reproductive genes the evidence is more mixed with neither ovaries nor testis coming out at the bottom of the list. (Not sure how to wrap this up)
 
 \begin{figure*}[t]
     \centering
@@ -125,25 +168,12 @@ Where possible we sought to confirm these results using tissue specific gene exp
     \label{fig:reactome}
 \end{figure*}
 
-\subsection*{Conserved microRNAs are strongly constrained}
-While ExtRaINSIGHT can be applied to coding regions it distinguishes itself from previous work by being equally applicable to non-coding regions. However, one of the major challenges of studying the relative role of selection between types of non-coding sequence is the varying imprecision of most non-coding annotations. Thus, to investigate the role of ultra-strong in non-coding regions we chose core splice sites and microRNAs because of their characterized biochemical function and contrasted them with 1D coding sequence. Splice sites were under incredibly strong selection with $\backsim45\%$ of sites being depleted for rare variation, twice the rate seen in 1D CDS. Both seed and non-seed regions of conserved microRNAs also showed $50\%-70\%$more strong selection than 1D CDS (\prettyref{fig:micro_rnas}A). This is likely due to the extreme dependence of microRNA function on a specific sequence and the highly pleiotropic effects of disrupting one (cite). In contrast, non-conserved microRNAs no evidence of strong selection.
-
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\linewidth]{figures/microRNA_constraint.pdf}
     \caption{\textbf{\textbf{Heterozygous mutations in conserved microRNAs are under stronger selection than those in CDS}}}
     \label{fig:micro_rnas}
 \end{figure*}
-
-\subsection*{Human accelerated and ultra-conserved regions show surprisingly similar amounts of ultra-strong selection}
-
-Next we investigated two types of regions under dramatically different patterns of phylogenetic constraint. Ultra-conserved non-coding elements (UCNEs) are defined by extreme sequence conservation across broad swaths of phylogenetic time. In contrast human accelerated regions (HARs) show an excess of substitutions along the human lineage suggesting adaptation may be taking place (Pollard et al 2006). Naively we would expect that UCNEs would be extremely intolerant to mutation becasue of their deep conservation however that is not the case. Only $\backsim 9\%$ of sites in UCNEs show evidence of ultra-strong purifying selection (\prettyref{fig:micro_rnas}B). There are several possible explanations for this: (1) UCNEs may largely be haplosufficent so heterzyogous variation is well tolerated, or (2) that UCNEs are under pervasive weak selection such that mutations are tolerated at the individual level but are sufficient to maintain near sequence identity across phylogenetic time. There is some evidence for this based on work in mice where deletions of UCNEs yielded viable and fertile individuals with no other obvious phenotypic defects (Ahituv et al. 2007). More recent work has provided examples of UCNEs that are haploinsufficient (Bhatia et al. 2013) or whose homozygous deletion leads to developmental defects (Dickel et al. 2018) but even in these cases individuals with these defects remained viable and fertile.
-
-If UCNEs show unexpectedly little evidence of ultra-strong selection, HARs show a surprising amount despite also being almost entirely non-coding. Roughly $5\%$ of sites in HARs show ultra-strong selection, half that of UCNEs, despite being much more recently evolved. Several lines of evidence have implicated HARs in neuronal function with mutations in those regions being associated with cognitive disorders (Doan et al. 2016, Won et al 2019, Ryu et al 2018). This shows that just because function is recently evolved does not preclude it from being under ultra strong selection. 
-
-\subsection*{Neutral mutation model mis-specification is observed due to hyper-local mutation rate variation is associated with TF binding}
-
-ExtRaINSIGHT relies upon a neutral mutation model calibrated using putatively neutral regions to make inferences about whether a given set of sites is depleted or enriched for ultra-rare variants. In addition to sequence context the model adjusts for local mutation rate variation and excludes CpG sites to avoid issues arising from methylation dependent variation in mutation rate. This model is globally well calibrated across the whole spectrum of predicted mutation probabilities (supplemental figure 2). Despite this we observed that sets of sites that we would expect to be under selection were in fact inferred to have excesses of rare variation. This effect was most pronounced in the 1kb directly upstream of transcription start sites (TSS) and to a far lesser degree at 4D sites but not near the transcription termination sites (TTS)( \prettyref{fig:mutation_model_misspec} ). Given that it has been shown that proximal promoter region is under purifying selection (cite) we hypothesized that this is due to a local elevation of mutation rates directly upstream of TSS  (as has been shown in other species?(cite)). We further narrowed our focus to TFBS which have been previously observed to have elevated mutation rates (cite). When we looked within cannonical TFBS motifs we observed an excess of rare variants, even more so than in the X bp directly flankning the TFBS. This suggests that there are hyper-local determinants of mutation rate, in this case likely that the binding of TFs is itself mutagenic (cite). This poses a fundamental problem, all neutral models to date assume that mutation and function that exposes genomic sequence to selection can be decoupled for the purposes of estimating a neutral model, which does not hold here as TF binding is both inherently functional and mutagenic. Addressing this challenge will be critical not only for traditional evolutionary models but particularly for application in oncogenomics where excess mutations could give false signals of recurrent mutation leading to erroneous identification of cancer drivers (see discussion).
 
 \begin{figure*}[t]
     \centering
@@ -152,12 +182,6 @@ ExtRaINSIGHT relies upon a neutral mutation model calibrated using putatively ne
     \label{fig:mutation_model_misspec}
 \end{figure*}
 
-\section*{Discussion}
 
-\subsection*{Data Availability}
-
-ExtRaINSIGHT and INSIGHT2 scores can be computed for a set of annotations using the ExtRaINSIGHT web portal at \url{http://compgen.cshl.edu/extrainsight}. All pipeline and analysis for this paper can be viewed on github at \placeholder.
-
-\bibliography{example-bibliography}
 
 \end{document}
