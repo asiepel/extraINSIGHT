@@ -52,7 +52,7 @@
 
 \linespread{1.15}
 \title{Global characterization of mutations of large \\
-  selective effect across the human genome}
+  selective effect in the human genome}
 %\title{Non-coding ultra-strong selection in the human genome varies by regulatory role and phylogenetic conservation}
 %\leadauthor{Dukler}
 %\shorttitle{ExtRaINSIGHT}
@@ -81,30 +81,27 @@ The rapid expansion of human population whole genome sequencing data has resulte
 
 \section*{Introduction}
 
-Like a gambler, an evolving species has to pay for the chance to win.   In the game of evolution, this payment takes the form of mutation.  As in most games of chance, the majority of ``draws'' result in a loss (decrease in fitness) with an occasional pay-off (adaptive mutation).  In Haldane's words, deleterious mutation is the price a species pays for the privilege of evolution [CITE].
-% [to paraphrase.....?]
+Like a gambler, an evolving species has to pay for the chance to win.   In the game of evolution, this payment takes the form of deleterious mutations.  As in most games of chance, the majority of ``draws'' result in a loss (decrease in fitness) with an occasional pay-off (adaptive mutation).  In Haldane's words, loss of fitness owing to deleterious mutation is the ``price paid by a species for its capacity for further evolution'' \cite{HALD37}.
 
-Understanding the impact of new mutations on fitness has has been a major focus of evolutionary genetics for nearly a century (e.g., Haldane, 1927, 1924?). Together with genetic drift and natural selection, mutation is one of  three primary evolutionary forces, and it is the only one that can generate new genetic variation.  In this way, mutation is the "fuel" that enables natural selection to do its work.  Because fitness effects exist on a continuum, the general problem is to characterize the distribution of fitness effects (DFE) of new mutations.  The DFE is central to a wide variety of fundamental problems in evolutionary genetics, including understanding the genetic architecture of complex traits, the emergence of recombination and sex, the behavior of populations held at small size (as with domesticated animals and plants), and the effects of mutational load (Keightley review).
+Understanding the impact of new mutations on fitness has has been a major focus of evolutionary genetics for nearly a century \cite{FISH22,HALD27,HALD37}. Together with genetic drift and natural selection, mutation is one of three primary evolutionary forces, and it is the only one that can generate new genetic variation.  In this way, mutation is the fuel that enables natural selection to do its work.  Because fitness effects exist on a continuum, the general problem is to characterize the distribution of fitness effects (DFE) of new mutations.  Estimating the DFE is central in addressing a wide variety of fundamental problems in evolutionary genetics, including understanding the genetic architecture of complex traits, the emergence of recombination and sex, the behavior of populations maintained at small population sizes (as with domesticated animals and plants), and the effects of mutational load \cite{EYREKEIG07}.
 
 %[something about human disease]
+% another citation for load?  or is this one ok?
 
-At the same time, characterizing the DFE is notoriously difficult.  Naturally occurring mutations are rare, they are often difficult to detect, and their fitness effects are hard to measure, especially when subtle (as in most cases).  In model organisms, a variety of innovative experimental techniques have been developed to improve the ability to measure aspects of the DFE, such as mutation accumulation experiments or....
-experimental evolution....mutagenesis.....[check].  In humans, however, the only practical route for characterizing the DFE runs through statistical modeling and population genetic theory [cite Keightley?].
+At the same time, characterizing the DFE is notoriously difficult.  Naturally occurring mutations are rare, they are often difficult to detect, and their fitness effects are hard to measure, especially when subtle (as is typical).  In model organisms, a variety of innovative experimental techniques have been developed to enable measurement the DFE, including mutagenesis and mutation accumulation experiments, although these methods tend to produce estimates with large confidence intervals, are useful only for mutations of relatively large effect, and may not otherwise be representative of spontaneously occurring mutations.  Moreover, these methods cannot be applied to humans, or, indeed, to any type of organism that cannot be experimentally manipulated and monitored in relatively large numbers.
 
-Over the past two decades, with the sequencing of the human genome and widespread availability of sequencing data for panels of human individuals
-various strategies have been developed
-including 
-divergence across species
-combinations of patterns of polymorphism and divergence
-site frequency spectrum and diffusion theory (Eyre Walker; Boyko; other Bustamante; Huang \& Siepel)
-something with trios?  personal genomes?
-human genetics -- prevalence of disease (Kondrashov)
+For this reason, efforts to characterize the DFE in recent years have focused on the use of statistical modeling, population genetic theory, and large-scale DNA sequence data.  In humans, these statistical methods are essentially the only practical means for characterizing the DFE, and in all organisms, they have the advantage of providing access to a collection of naturally occurring mutations of both small and large effect.
+Over the past two decades, various versions of this strategy have been devised, including ones that make use of patterns of
+divergence across species \cite{KIMU77,KONDCROW93,NIELYANG03,EYREKEIG99},  
+combinations of patterns of polymorphism and divergence \cite{MCDOKREI91,SAWYHART92,BUSTETAL02,ARBIETAL13},
+the full site-frequency spectrum in human populations \cite{EYREETAL06,BOYKETAL08,HUANSIEP19},
+and rates of protein-truncating variants at dominant or X-linked disease-associated genes \cite{KOND03}.   % maybe don't keep this one?
 
-Nevertheless, these strategies have some crucial limitations.  In particular, patterns of variation are strongly influenced by demographic history, especially by population bottlenecks, expansions, and substructure, so that careful demographic modeling is required to isolate the effects of selection.  In addition, the population panels that are typically available---consisting of hundreds to a few thousand individuals---are informative about only a relatively narrow slice of the DFE.  For example, focusing on the case of purifying selection (which generally dominates), strong  selection (such that $-s$ is much larger than $\sim$1\%) will tend to hold variants to such low frequencies in the population that they will not be reliably detectable in these panels, whereas weak selection (such that $-s$ is on the order of $10^{-4}$ or less) will be indistinguishable from random genetic drift.  
+Nevertheless, these strategies have some crucial limitations.  In particular, patterns of variation are strongly influenced by demographic history, especially by population bottlenecks, expansions, and substructure, so that careful demographic modeling is required to isolate the effects of selection.  In addition, the population panels that are typically available---consisting of hundreds to a few thousand individuals---are informative about only a relatively narrow slice of the DFE.  For example, focusing on the case of purifying selection (which generally dominates), strong  selection (such that $|s|$ is much larger than $\sim$1\%) will tend to hold variants to such low frequencies in the population that they will not be reliably detectable in these panels, whereas weak selection (such that $|s|$ is on the order of $10^{-4}$ or less) will be indistinguishable from random genetic drift.  
 
 In the last few years, a number of data sets have been released that 
 push samples sizes of completely sequenced genomes or exomes into the tens of thousands
-[biobank, GNOMAD, what else....?]
+[biobank, GNOMAD, what else....?] \cite{LEKETAL16}
 allowing rare variants (with relative frequencies of less than about one in a thousand) to be identified with reasonable confidence.
 These data sets can be used to reliably characterize very strong purifying selection ($-s > 1$\%)
 by allowing identification of statistically significant deficiencies of such rare variants.
@@ -120,12 +117,12 @@ which has been shown to reliably
 distinguish haploinsufficient from ......   dosage sensitive......?
 [something about disease predictivity]
 
-although, as clarified by Fuller et al., these measures are strictly informative only about the strength of selection against heterozygous mutations.
+although, as clarified by Fuller et al. \cite{FULLETAL19}, these measures are strictly informative only about the strength of selection against heterozygous mutations.
 and are of limited value in ..... [direct estimation of $s_h$]  owing to length dependency and ....
 
-(cite also Petrovski, Utah group, others)
+(cite also Petrovski, Utah group, others)   \cite{PETRETAL13}
 
-An approach more grounded in population genetic theory has been taken by Cassa et al. and Weghorn et al.
+An approach more grounded in population genetic theory has been taken by Cassa et al.\ \cite{CASSETAL17} and Weghorn et al.\ \cite{WEGHETAL19}
 who have shown that
 many protein-truncating variants (PTVs) in ExAC
 can be remarkably well described the regime of sufficiently strong selection ($-s > \sim$1\%), 
@@ -264,7 +261,8 @@ By design, ExtRaINSIGHT will not detect weak purifying selection acting upon a r
 
 ExtRaINSIGHT and INSIGHT2 scores can be computed for a set of annotations using the ExtRaINSIGHT web portal at \url{http://compgen.cshl.edu/extrainsight}. All pipeline and analysis for this paper can be viewed on github at \placeholder.
 
-\bibliography{example-bibliography}
+\bibliographystyle{plos2015}
+\bibliography{refs}
 
 \begin{figure*}[t]
     \centering
