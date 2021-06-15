@@ -75,7 +75,49 @@
 %\end{keywords}
 
 \begin{abstract}
-The rapid expansion of human population whole genome sequencing data has resulted in an extensive catalog of rare variation. We use this rare variation as a proxy for \textit{de novo} mutation and construct a context-dependent model to predict rates of mutation genome-wide. The model also implicitly corrects for local factors, like replication timing, which are known to influence mutation rate using variation in the rates of rare variants in proximal neutral regions. We then compare the predicted versus observed rates of rare variation for groups of elements and discover those with fewer rare variants than expected. This depletion in rare variation is caused by strong purifying selection on the collection of elements where any mutation results in a large fitness penalty. We contrast this measure of strong selection with a measure of generalized selection to estimate the relative fraction of sites under weak and strong selection across both coding and non-coding regions. Consistent with previous work we find that the genes associated with neuronal function are most strongly depleted for rare variation while those associated with reproduction enriched relative the genomic background. By applying our method to non-coding regions we find that splice sites are the most strongly conserved followed by conserved microRNAs which show less variation than non-degenerate coding regions. Surprisingly we observe relatively little ultra-strong selection in humans in non-coding regions that show strict and deep phylogenetic conservation suggesting that they may be maintained by either pervasive weak selection or are tolerant to heterozygous mutation.  We also observed excess rare variation across a variety of elements that are inherently tied to biochemical function indicating that improvements in separating selection and mutation will require new approaches. Finally we have made the method we developed for this analysis, ExtRaINSIGHT, available as a web-tool for others to use.
+
+ Understanding the impact of new mutations on fitness is a longstanding problem in evolutionary genomics.  
+ Recently,
+  whole genome sequencing data sets for tens of thousands of human individuals
+  have enabled characterization of mutations having large selective effect, with selection coefficients exceeding $1$\%.
+%
+However, these methods have so far been applied to protein-coding genes only, focusing on protein-truncating variants.
+%
+  Here we describe a 
+  new method, called ExtRaINSIGHT for analysing mutations of large effect in noncoding as well as coding regions of the human
+  genome.
+%
+  ExtRaINSIGHT estimates the prevalance of strong purifying selection
+  by  measuring the depletion for rare (minor allele frequency $<0.1$\%) variants  in a target set of genomic sites relative to nearby a nearby set of neutrally evolving sites
+  after controlling for local variation in mutation rate and neighbor-dependent mutation rates.
+%  
+We show using simulations that, above a minimal threshold, the ExtRaINSIGHT score $\lambda$
+  is highly predictive of the site-specific selection coefficient against heterozygous mutations $s_h$.
+ %
+ Applying these methods to $\sim$75,000 whole genome sequences from the gnomAD project,
+%check number  
+  we find that features in and around protein-coding genes, including splice sites and untranslated regions
+  ExtRaINSIGHT scores are generally concordant with previous results based on protein-truncating variants.
+  % say something more?
+%  indicating $s_h \approx 0.03$ for highly disruptive mutations and average..... $s_h$.....
+ % Neuronal genes (and...?) are enriched for strong selection, whereas.....
+%
+  Among noncoding elements, microRNAs (stem?) appear to be under very strong selection, on average,
+  whereas structural RNAs and lincRNAs display considerably reduced evidence.
+  % check
+  Interestingly,  ultra-conserved elements and human accelerated elements display only moderate evidence of selection 
+  despite their extreme conservation over millions of years of evolution.
+  % something about genetic load result
+  %
+  Our model detects
+Apparently owing to an atypical mutation pattern in the upstream regions of genes, 
+  
+  Overall,
+
+
+
+  
+  %The rapid expansion of human population whole genome sequencing data has resulted in an extensive catalog of rare variation. We use this rare variation as a proxy for \textit{de novo} mutation and construct a context-dependent model to predict rates of mutation genome-wide. The model also implicitly corrects for local factors, like replication timing, which are known to influence mutation rate using variation in the rates of rare variants in proximal neutral regions. We then compare the predicted versus observed rates of rare variation for groups of elements and discover those with fewer rare variants than expected. This depletion in rare variation is caused by strong purifying selection on the collection of elements where any mutation results in a large fitness penalty. We contrast this measure of strong selection with a measure of generalized selection to estimate the relative fraction of sites under weak and strong selection across both coding and non-coding regions. Consistent with previous work we find that the genes associated with neuronal function are most strongly depleted for rare variation while those associated with reproduction enriched relative the genomic background. By applying our method to non-coding regions we find that splice sites are the most strongly conserved followed by conserved microRNAs which show less variation than non-degenerate coding regions. Surprisingly we observe relatively little ultra-strong selection in humans in non-coding regions that show strict and deep phylogenetic conservation suggesting that they may be maintained by either pervasive weak selection or are tolerant to heterozygous mutation.  We also observed excess rare variation across a variety of elements that are inherently tied to biochemical function indicating that improvements in separating selection and mutation will require new approaches. Finally we have made the method we developed for this analysis, ExtRaINSIGHT, available as a web-tool for others to use.
 
 \end{abstract}
 
