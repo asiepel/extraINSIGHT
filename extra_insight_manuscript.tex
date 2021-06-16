@@ -75,48 +75,24 @@
 %\end{keywords}
 
 \begin{abstract}
-
- Understanding the impact of new mutations on fitness is a longstanding problem in evolutionary genomics.  
- Recently,
-  whole genome sequencing data sets for tens of thousands of human individuals
-  have enabled characterization of mutations having large selective effect, with selection coefficients exceeding $1$\%.
-%
-However, these methods have so far been applied to protein-coding genes only, focusing on protein-truncating variants.
-%
-  Here we describe a 
-  new method, called ExtRaINSIGHT for analysing mutations of large effect in noncoding as well as coding regions of the human
-  genome.
-%
-  ExtRaINSIGHT estimates the prevalance of strong purifying selection
-  by  measuring the depletion for rare (minor allele frequency $<0.1$\%) variants  in a target set of genomic sites relative to nearby a nearby set of neutrally evolving sites
-  after controlling for local variation in mutation rate and neighbor-dependent mutation rates.
+% Understanding the impact of new mutations on fitness is a longstanding problem in evolutionary genomics.  
+ Genome sequencing of panels of tens of thousands of human individuals has recently enabled measurements of large selective effects for mutations to protein-coding genes, corresponding to fitness losses of as much as 1--30\%.  Here we describe a new method, called ExtRaINSIGHT, for analysing mutations of large selective effect in noncoding as well as coding regions of the human genome.  ExtRaINSIGHT estimates the prevalance of strong purifying selection ($\lambda_s$) as the fractional depletion for rare variants (minor allele frequency $<0.1$\%) in a target set of genomic sites relative to matched sites that are putatively neutrally evolving, in a manner that controls for local variation and neighbor-dependence in mutation rate.
 %  
-We show using simulations that, above a minimal threshold, the ExtRaINSIGHT score $\lambda$
-  is highly predictive of the site-specific selection coefficient against heterozygous mutations $s_h$.
+We show using simulations that, above an appropriate threshold, the score $\lambda_s$ is closely related to the average site-specific selection coefficient against heterozygous mutations, as predicted under mutation-selection balance.
  %
- Applying these methods to $\sim$75,000 whole genome sequences from the gnomAD project,
+ Applying ExtRaINSIGHT to 71,702 whole genome sequences from gnomAD v3,
 %check number  
-  we find that features in and around protein-coding genes, including splice sites and untranslated regions
-  ExtRaINSIGHT scores are generally concordant with previous results based on protein-truncating variants.
-  % say something more?
-%  indicating $s_h \approx 0.03$ for highly disruptive mutations and average..... $s_h$.....
+we find that $\lambda_s$ is generally concordant with previous results at features in and around protein-coding genes.  Splice sites display the highest levels in the genome of strong selection against new mutations ($\lambda_s=0.48$), with somewhat lower levels for nonsense mutations ($\lambda_s=0.23$) and mutations to untranslated regions ($\lambda_s< 0.03$).
  % Neuronal genes (and...?) are enriched for strong selection, whereas.....
-%
-  Among noncoding elements, microRNAs (stem?) appear to be under very strong selection, on average,
-  whereas structural RNAs and lincRNAs display considerably reduced evidence.
-  % check
-  Interestingly,  ultra-conserved elements and human accelerated elements display only moderate evidence of selection 
-  despite their extreme conservation over millions of years of evolution.
-  % something about genetic load result
-  %
-  Our model detects
-Apparently owing to an atypical mutation pattern in the upstream regions of genes, 
-  
-  Overall,
+Among annotated noncoding elements, 
+mature microRNA seed regions exhibit the strongest purifying selection ($\lambda_s =  0.38$),
+  whereas lincRNAs and other noncoding RNAs display considerably reduced evidence of strong selection ($\lambda_s < 0.01$).
+ Ultra-conserved elements ($\lambda_s = 0.09$) and human accelerated elements ($\lambda_s = 0.04$) display only moderate evidence of strong selection, suggesting that  
+  their extreme conservation over millions of years of evolution results primarily from weaker purifying selection distributed evenly across many nucleotides.
+  % something about genetic load result -- have to update this
+  Our analysis suggests.....[genetic load result]
+Our analysis also reveals highly atypical mutation rates in the upstream regions of genes, making it difficult to obtain accurate measurements there.  Overall, these methods shed new light on the genome-wide distribution of fitness effects for new mutations by combining deep new sequencing data sets and classical theory from population genetics.
 
-
-
-  
   %The rapid expansion of human population whole genome sequencing data has resulted in an extensive catalog of rare variation. We use this rare variation as a proxy for \textit{de novo} mutation and construct a context-dependent model to predict rates of mutation genome-wide. The model also implicitly corrects for local factors, like replication timing, which are known to influence mutation rate using variation in the rates of rare variants in proximal neutral regions. We then compare the predicted versus observed rates of rare variation for groups of elements and discover those with fewer rare variants than expected. This depletion in rare variation is caused by strong purifying selection on the collection of elements where any mutation results in a large fitness penalty. We contrast this measure of strong selection with a measure of generalized selection to estimate the relative fraction of sites under weak and strong selection across both coding and non-coding regions. Consistent with previous work we find that the genes associated with neuronal function are most strongly depleted for rare variation while those associated with reproduction enriched relative the genomic background. By applying our method to non-coding regions we find that splice sites are the most strongly conserved followed by conserved microRNAs which show less variation than non-degenerate coding regions. Surprisingly we observe relatively little ultra-strong selection in humans in non-coding regions that show strict and deep phylogenetic conservation suggesting that they may be maintained by either pervasive weak selection or are tolerant to heterozygous mutation.  We also observed excess rare variation across a variety of elements that are inherently tied to biochemical function indicating that improvements in separating selection and mutation will require new approaches. Finally we have made the method we developed for this analysis, ExtRaINSIGHT, available as a web-tool for others to use.
 
 \end{abstract}
@@ -132,14 +108,14 @@ Understanding the impact of new mutations on fitness has has been a major focus 
 
 At the same time, characterizing the DFE is notoriously difficult.  Naturally occurring mutations are rare, they are often difficult to detect, and their fitness effects are hard to measure, especially when subtle (as is typical).  In model organisms, a variety of innovative experimental techniques have been developed to enable measurement the DFE, including mutagenesis and mutation accumulation experiments, although these methods tend to produce estimates with large confidence intervals, are useful only for mutations of relatively large effect, and may not otherwise be representative of spontaneously occurring mutations.  Moreover, these methods cannot be applied to humans, or, indeed, to any type of organism that cannot be experimentally manipulated and monitored in relatively large numbers.
 
-For this reason, efforts to characterize the DFE in recent years have focused on the use of statistical modeling, population genetic theory, and large-scale DNA sequence data.  In humans, these statistical methods are essentially the only practical means for characterizing the DFE, and in all organisms, they have the advantage of providing access to a collection of naturally occurring mutations of both small and large effect.
+For these reasons, efforts to characterize the DFE in recent years have focused on the use of statistical modeling, population genetic theory, and large-scale DNA sequence data.  In humans, these statistical methods are the only practical means for characterizing the DFE, and in all organisms, they have the advantage of providing access to a collection of naturally occurring mutations of both small and large effect.
 Over the past two decades, various versions of this strategy have been devised, including ones that make use of patterns of
 divergence across species \cite{KIMU77,KONDCROW93,NIELYANG03,EYREKEIG99},  
 combinations of patterns of polymorphism and divergence \cite{MCDOKREI91,SAWYHART92,BUSTETAL02,ARBIETAL13},
 the full site-frequency spectrum in human populations \cite{EYREETAL06,BOYKETAL08,HUANSIEP19},
 and rates of protein-truncating variants at dominant or X-linked disease-associated genes \cite{KOND03}.   % maybe don't keep this one?
 
-Nevertheless, these strategies have some crucial limitations.  In particular, patterns of variation are strongly influenced by demographic history, especially by population bottlenecks, expansions, and substructure, so that careful demographic modeling is required to isolate the effects of selection.  In addition, the population panels that are typically available---consisting of hundreds to a few thousand individuals---are informative about only a relatively narrow slice of the DFE.  For example, strong purifying selection (such that $-s$ is much larger than $\sim$1\%) will tend to hold variants to such low frequencies in the population that they will not be reliably detectable in these panels, whereas weak purifying selection (such that $-s$ is on the order of $10^{-4}$ or less in humans) will be indistinguishable from random genetic drift.  Thus, only in approximately the range $-10^{-2} < s < -10^{-4}$  is there any hope of accurately measuring the strength of purifying selection.
+Nevertheless, these strategies have some crucial limitations.  In particular, patterns of variation are strongly influenced by demographic history, especially by population bottlenecks, expansions, and substructure, so that careful demographic modeling is required to isolate the effects of selection.  In addition, the population panels that are typically available---consisting of hundreds to a few thousand individuals---are informative about only a relatively narrow slice of the DFE.  For example, strong purifying selection (such that $-s$ is larger than $\sim$1\%) will tend to hold variants to such low frequencies in the population that they will not be reliably detectable in these panels, whereas weak purifying selection (such that $-s$ is on the order of $10^{-4}$ or less in humans) will be indistinguishable from random genetic drift.  Thus, only in approximately the range $-10^{-2} < s < -10^{-4}$  is there any hope of accurately measuring the strength of purifying selection.
 
 In the last few years, a number of data sets have been released that 
 push samples sizes of completely sequenced genomes or exomes into the tens of thousands
@@ -219,9 +195,9 @@ We then assume that natural selection has the effect of imposing a fractional re
 \begin{equation}
   P(\mathbb{Y}; \lambda_s, \mathbb{P}) = \prod_i \left[(1-\lambda_s) P_i\right]^{Y_i}\left[1- (1-\lambda_s) P_i\right]^{1-Y_i}
 \end{equation}
-\noindent where $\lambda_s$ is the scale factor capturing a depletion of rare genetic variation.
+\noindent where $\lambda_s$ is the scale factor capturing a depletion of rare genetic variation.  Assuming the $P_i$ values are pre-estimated, a maximum-likelihood estimate (MLE) of $\lambda_s$ can be obtained in closed form (see Methods).
 
-Here, when $\lambda_s$ falls between 0 and 1 it can be interpreted as a measure of the prevalence of strong purifying selection,
+When $\lambda_s$ falls between 0 and 1 it can be interpreted as a measure of the prevalence of strong purifying selection,
 i.e., selection sufficiently strong that mutations are either lethal and never occur or tend to be eliminated within a few generations and are never allowed to drift to appreciable frequency
 This value can be thought of as fraction of sites intolerant to heterozygous mutants, although in practice, some sites may be more, and some sites less, intolerant
 
