@@ -76,9 +76,9 @@
 
 \begin{abstract}
 % Understanding the impact of new mutations on fitness is a longstanding problem in evolutionary genomics.  
- Genome sequencing of panels of tens of thousands of human individuals has recently enabled measurements of large selective effects for mutations to protein-coding genes, corresponding to fitness losses of as much as 1--30\%.  Here we describe a new method, called ExtRaINSIGHT, for analysing mutations of large selective effect in noncoding as well as coding regions of the human genome.  ExtRaINSIGHT estimates the prevalance of strong purifying selection ($\lambda_s$) as the fractional depletion for rare variants (minor allele frequency $<0.1$\%) in a target set of genomic sites relative to matched sites that are putatively neutrally evolving, in a manner that controls for local variation and neighbor-dependence in mutation rate.
+  Recently, genome sequencing of tens of thousands of human individuals has enabled the measurement of large selective effects for mutations to protein-coding genes, corresponding to fitness losses of as much as 1--30\%.  Here we describe a new method, called ExtRaINSIGHT, for measuring similar selective effects in noncoding as well as in coding regions of the human genome.  ExtRaINSIGHT estimates the prevalance of strong purifying selection ($\lambda_s$) as the fractional depletion for rare variants (minor allele frequency $<0.1$\%) in a target set of genomic sites relative to matched sites that are putatively neutrally evolving, in a manner that controls for local variation and neighbor-dependence in mutation rate.
 %  
-We show using simulations that, above an appropriate threshold, the score $\lambda_s$ is closely related to the average site-specific selection coefficient against heterozygous mutations, as predicted under mutation-selection balance.
+We show using simulations that, above an appropriate threshold, the score $\lambda_s$ is closely related to the average site-specific selection coefficient against heterozygous mutations, as predicted at mutation-selection balance.
  %
  Applying ExtRaINSIGHT to 71,702 whole genome sequences from gnomAD v3,
 %check number  
@@ -101,56 +101,59 @@ Our analysis also reveals highly atypical mutation rates in the upstream regions
 
 Like a gambler, an evolving species has to pay for the chance to win.   In the game of evolution, this payment takes the form of deleterious mutations.  As in most games of chance, the majority of ``draws'' result in a loss (decrease in fitness) with an occasional pay-off (adaptive mutation).  In Haldane's words, loss of fitness owing to deleterious mutation is the ``price paid by a species for its capacity for further evolution'' \cite{HALD37}.
 
-Understanding the impact of new mutations on fitness has has been a major focus of evolutionary genetics for nearly a century \cite{FISH22,HALD27,HALD37}. Together with genetic drift and natural selection, mutation is one of three primary evolutionary forces, and it is the only one that can generate new genetic variation.  In this way, mutation is the fuel that enables natural selection to do its work.  Because fitness effects exist on a continuum, the general problem is to characterize the distribution of fitness effects (DFE) of new mutations.  Estimating the DFE is central in addressing a wide variety of fundamental problems in evolutionary genetics, including understanding the genetic architecture of complex traits, the emergence of recombination and sex, the behavior of populations maintained at small population sizes (as with domesticated animals and plants), and the effects of mutational load \cite{EYREKEIG07}.
+Understanding the impact of new mutations on fitness has has been a major focus of evolutionary genetics for nearly a century \cite{FISH22,HALD27,HALD37}. Together with genetic drift and natural selection, mutation is one of three primary evolutionary forces and the only force that can generate new genetic variation.  In this way, mutation is the fuel that enables natural selection to do its work.  Because fitness effects occur on a continuum, the general problem is to characterize the distribution of fitness effects (DFE) of new mutations.  Estimating the DFE is central in addressing a wide variety of fundamental problems in evolutionary genetics, including understanding the genetic architecture of complex traits, the emergence of recombination and sex, the behavior of populations maintained at small population sizes (as with domesticated animals and plants), and the effects of mutational load \cite{EYREKEIG07}.
 
 %[something about human disease]
 % another citation for load?  or is this one ok?
 
 At the same time, characterizing the DFE is notoriously difficult.  Naturally occurring mutations are rare, they are often difficult to detect, and their fitness effects are hard to measure, especially when subtle (as is typical).  In model organisms, a variety of innovative experimental techniques have been developed to enable measurement the DFE, including mutagenesis and mutation accumulation experiments, although these methods tend to produce estimates with large confidence intervals, are useful only for mutations of relatively large effect, and may not otherwise be representative of spontaneously occurring mutations.  Moreover, these methods cannot be applied to humans, or, indeed, to any type of organism that cannot be experimentally manipulated and monitored in relatively large numbers.
 
-For these reasons, efforts to characterize the DFE in recent years have focused on the use of statistical modeling, population genetic theory, and large-scale DNA sequence data.  In humans, these statistical methods are the only practical means for characterizing the DFE, and in all organisms, they have the advantage of providing access to a collection of naturally occurring mutations of both small and large effect.
+For these reasons, recent efforts to characterize the DFE have focused on the use of statistical modeling, population genetic theory, and large-scale DNA sequence data.  In humans, these statistical methods are the only practical means for characterizing the DFE, and in all organisms, they have the advantage of providing access to a collection of naturally occurring mutations of both small and large effect.
 Over the past two decades, various versions of this strategy have been devised, including ones that make use of patterns of
 divergence across species \cite{KIMU77,KONDCROW93,NIELYANG03,EYREKEIG99},  
 combinations of patterns of polymorphism and divergence \cite{MCDOKREI91,SAWYHART92,BUSTETAL02,ARBIETAL13},
 the full site-frequency spectrum in human populations \cite{EYREETAL06,BOYKETAL08,HUANSIEP19},
 and rates of protein-truncating variants at dominant or X-linked disease-associated genes \cite{KOND03}.   % maybe don't keep this one?
 
-Nevertheless, these strategies have some crucial limitations.  In particular, patterns of variation are strongly influenced by demographic history, especially by population bottlenecks, expansions, and substructure, so that careful demographic modeling is required to isolate the effects of selection.  In addition, the population panels that are typically available---consisting of hundreds to a few thousand individuals---are informative about only a relatively narrow slice of the DFE.  For example, strong purifying selection (such that $-s$ is larger than $\sim$1\%) will tend to hold variants to such low frequencies in the population that they will not be reliably detectable in these panels, whereas weak purifying selection (such that $-s$ is on the order of $10^{-4}$ or less in humans) will be indistinguishable from random genetic drift.  Thus, only in approximately the range $-10^{-2} < s < -10^{-4}$  is there any hope of accurately measuring the strength of purifying selection.
+Nevertheless, these strategies have some important limitations.  In particular, patterns of variation are strongly influenced by demographic history, especially by population bottlenecks, expansions, and substructure, so that careful demographic modeling is required to isolate the effects of selection.  In addition, the population panels that are typically available---consisting of hundreds to a few thousand individuals---are informative about only a relatively narrow slice of the DFE.  For example, in humans strong purifying selection (such that $s$ is larger than $\sim$1\%) will tend to hold variants to such low frequencies in the population that they will not be reliably detectable in these panels, whereas weak purifying selection (such that $s$ is on the order of $10^{-4}$ or less) will be indistinguishable from random genetic drift.  Thus, only in approximately the range $10^{-4} < s < 10^{-2}$  is there any hope of accurately measuring the strength of purifying selection.
 
-In the last few years, a number of data sets have been released that 
-push samples sizes of completely sequenced genomes or exomes into the tens of thousands
-[biobank, GNOMAD, what else....?] \cite{LEKETAL16}
-allowing rare variants (with relative frequencies of less than about one in a thousand) to be identified with reasonable confidence.
-These data sets can be used to reliably characterize very strong purifying selection ($-s > 1$\%)
-by allowing identification of statistically significant deficiencies of such rare variants.
+In recent years, several large consortium projects have released public genome sequence data (either at the exome or the whole-genome level) for several thousand human individuals \cite{FUETAL13,1KGCONS15,LEKETAL16,KARCETAL20}.  The largest of these data sets now span many tens of thousands \cite{LEKETAL16,KARCETAL20}, allowing quite rare variants (with frequencies of $<10^{-3}$) to be identified with reasonable confidence.  With this capability in mind, a number of statistical methods have been developed to measure high levels of purifying selection against loss-of-function mutations for protein-coding genes, by comparing the frequencies of predicted loss-of-function (pLoF) variants to their mutation-rate-based expectation \cite{PETRETAL13,LEKETAL16,KARCETAL20,CASSETAL17,HAVRETAL19}.
+Perhaps the most widely used of these are the ``probability of being loss-of-function intolerant'' (pLI) measure, and its successor, the loss-of-function observed/expected upper bound fraction (LOEUF) measure, both of which have been shown to reliably distinguish null (unconstrained), autosomal recessive, and haploinsufficient genes and to be associated with a number of other measures of molecular function and disease association \cite{LEKETAL16,KARCETAL20}.
 
-(combine with above)
-A number of statistical methods have been developed to identify such variants
-functional elements?  
-leverage these data sets to identify genes that are intolerant to loss-of-function (or protein-truncating?) mutations
+While these measures are correlated with dominance effects, the frequency of rare pLoF variants is strictly informative only about the strength of selection against hetereozygous mutations, here denoted $s_{\text{het}}$~\cite{FULLETAL19}.  When selection is strong and near-complete recessivity can be excluded, mutation-selection balance is expected to hold with an equilibrium frequency for a rare variant of $q \approx \frac{\mu}{s_{\text{het}}}$, where $\mu$ is the deleterious mutation rate \cite{HALD37,FULLETAL19}.  Indeed, Cassa et al.\ \cite{CASSETAL17} and Weghorn et al.\ \cite{WEGHETAL19} have shown with extensive simulations that this relationship holds quite well for pLoF variants in the ExAC exome data \cite{LEKETAL16} down to $s_{\text{het}} \approx 0.01$.  Their approach allows for direct estimation of selection coefficients as large as $s_{\text{het}} =0.3$ or more, and they identified thousands of human genes with estimated $s_{\text{het}} >0.1$ for pLoF.
+Importantly,  estimation of $s_{\text{het}}$ based on mutation-selection balance
+is independent of demography because, in this regime, mutant alleles persist in the population for at most a few generations and genetic drift makes a negligible contribution to their allele frequencies.
+Therefore, in addition to permitting estimation of larger selection coefficients than other statistical methods, this approach requires no demographic modeling.
 
-Perhaps the most widely used of these 
-pLI (cite the later paper also and distinguish)
-which has been shown to reliably
-distinguish haploinsufficient from ......   dosage sensitive......?
-[something about disease predictivity]
 
-although, as clarified by Fuller et al. \cite{FULLETAL19}, these measures are strictly informative only about the strength of selection against heterozygous mutations.
-and are of limited value in ..... [direct estimation of $s_h$]  owing to length dependency and ....
+%Exome Aggregation Consortium (ExAC)
 
-(cite also Petrovski, Utah group, others)   \cite{PETRETAL13}
+In this paper,
+we develop method noncoding regions
+similar to methods for coding regions -- mutation rates
 
-An approach more grounded in population genetic theory has been taken by Cassa et al.\ \cite{CASSETAL17} and Weghorn et al.\ \cite{WEGHETAL19}
-who have shown that
-many protein-truncating variants (PTVs) in ExAC
-can be remarkably well described the regime of sufficiently strong selection ($-s > \sim$1\%), 
-mutation selection balance appears to hold approximately
-estimates of selection coefficients can be estimated reasonably well purely from the relative frequency with which these mutations are observed in a large population panel. (and the mutation rate)
+We derive the method.....
+fractional decrease in rare variants
 
-Importantly, this estimation of $s_h$ based on mutation-selection balance
-is independent of demography because, in this regime, mutant alleles persist in the population for at most a few generations 
-and genetic drift makes a negligible contribution to their allele frequencies
-Therefore, in addition to permitting estimation of larger values of $|s|$ than methods based on the full site frequency spectrum or on rates of cross-species divergence, it requires no demographic modeling
+however, for sufficiently strong selection
+can be interpreted as an estimator for shet
+based on mutation-selection balance similar to Cassa et al
+
+
+
+apply to gnomAD
+
+To date, the largest publicly available whole-genome sequence data set is the Genome Aggregation Database (gnomAD), which, at first publication, consisted of 15,708 individuals \cite{KARCETAL20}, 
+and in v3.1.1 has expanded to 76,156 individuals (https://gnomad.broadinstitute.org/).
+
+characterize the presence of very strong selection
+(``ultra-strong selection'')
+
+
+
+%%%%
+
+
 
 
 %Recent efforts at cataloging human genetic variation such as the 1000 Genomes Project (cite) and the Simons Genomic Diversity Panel (cite) resulted in extensive annotation of common genetic variants. These variants have illuminated a complex history of migration and admixture, both within modern humans and in their interactions with archaic hominins. Inferring demographic histories and distributions of selective effects have been the two most ubiquitous goals in population genetics, and while common variants have been essential for the former, they have had limited power for the latter. Usually, the presence of purifying selection is detected by a depletion of genetic variation within a region, however common variants are unable to differentiate between sites under weak or strong selection as both will prevent a variant from rising to high frequency in a population (cite). Recent projects with the aim of massively expanding the number of sequenced whole genomes such as (...) have provided an expansive view of rare human variation not previously available. Unlike common variants, rare variants are not efficient for inferring broad population structure but they can be used to differentiate between weak and strong purifying selection (cite).
@@ -163,10 +166,12 @@ Therefore, in addition to permitting estimation of larger values of $|s|$ than m
 
 \subsection*{Overview of ExtRaINSIGHT}
 
-The conceptual basis of ExtRaINSIGHT is straightforward: the method attempts to measure the fractional reduction in the presence of rare variants in a target set of sites relative to nearby sites that are putatively free from (direct) effects of natural selection.  
+The conceptual basis of ExtRaINSIGHT is straightforward: as noted, the method attempts to measure the fractional reduction in the presence of rare variants in a target set of sites relative to nearby sites that are putatively free from (direct) effects of natural selection.  
 
-In this way, the method is analogous to classical approaches such as the measurement of Ka/Ks (or dn/ds) from alignments of divergent protein-coding sequences or of XXXX (Crow),
-and to newer methods that compare target sets of noncoding elements with suitable background sequences in terms of divergence (CITE phastCons, phyloP, GERP), polymorphism (CITE Ekta, Huang, others), or polymorphism and divergence (CITE INSIGHT, LASSIE),
+In this way, the method is analogous to classical divergence-based approaches \cite{}
+%such as the measurement of Ka/Ks (or dn/ds) from alignments of divergent protein-coding sequences or of XXXX (Crow),
+as well as to newer methods that compare target sets of noncoding elements with suitable background sequences in terms of divergence (CITE phastCons, phyloP, GERP), polymorphism (CITE Ekta, Huang, others), or polymorphism and divergence (CITE INSIGHT, LASSIE),
+
 but the focus on rare variants (here, variants with minor allele frequencies of $< 0.1$\%) enables the method to shed light on mutations of large selective effect.
 
 The main challenge in this approach stems from the high sensitivity of relative rates of rare variants to variation in mutation rate.  To address this problem, we follow Lek et al...... (others?)
@@ -184,7 +189,7 @@ denoted $P_i$
 
 %%%
 
-In the absence of natural selection, we assume a  binomial sampling model for the presence (probability Pi) or absence (probably $1-P_i$) of a rare variant at each site $i$, excluding sites at which common variants occur (similar to.... GNOMAD).
+In the absence of natural selection, we assume a  binomial sampling model for the presence (probability $P_i$) or absence (probably $1-P_i$) of a rare variant at each site $i$, excluding sites at which common variants occur (similar to.... GNOMAD).
 where $P_i$ is determined by the local sequence context and local rate constant.  Assuming independence, the probability of a collection of nucleotide sites is given by,
 \begin{equation}
 P(\mathbb{Y}; \mathbb{P}) = \prod_i P_i^{Y_i}(1-P_i)^{1-Y_i}
