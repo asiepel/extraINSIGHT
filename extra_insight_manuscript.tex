@@ -133,35 +133,8 @@ Therefore, in addition to permitting estimation of larger selection coefficients
 
 %Exome Aggregation Consortium (ExAC)
 
-In this paper,
-we develop method noncoding regions
-similar to methods for coding regions -- mutation rates
-
-We derive the method.....
-fractional decrease in rare variants
-which uses a similar approach with polymorphism and divergence data
-
-we call this measure ``ultra-selection''
-lethal or near lethal.... sufficiently strong to eliminate variants within a few generations and prohibit their appearance even in panels of more than 70,000 individuals
-
-extraINSIGHT
-(define)
-out of analogy to our INSIGHT method
-
-however, for sufficiently strong selection
-can be interpreted as an estimator for shet
-based on mutation-selection balance similar to Cassa et al
-
-
-
-apply to gnomAD
-
-To date, the largest publicly available whole-genome sequence data set is the Genome Aggregation Database (gnomAD), which, at first publication, consisted of 15,708 individuals \cite{KARCETAL20}, 
-and in v3.1.1 has expanded to 76,156 individuals (https://gnomad.broadinstitute.org/).
-
-characterize the presence of very strong selection
-(``ultra-strong selection'')
-
+In this paper, we extend and generalize these ideas for application to the entire genome, including noncoding regions, in a new method called Extremely Rare INSIGHT (ExtRaINSIGHT).  Similar to our previous Inference of Natural Selection from Interspersed Genomically coHerent elemenTs (INSIGHT) method \cite{GRONETAL13,ARBIETAL13}, ExtRaINSIGHT can be used measure the influence of natural selection on any designated set of genomic sequences, including collections of short elements interspersed among other sequences (such as microRNAs or transcription factor binding sites).  As with INSIGHT, patterns of variation in a designated set of ``target'' sequences are compared to those in matched sequences that are putatively neutrally evolving, in a manner that controls for variation in mutation rate across the genome.  However, ExtRaINSIGHT focuses on rare variants only, in order to obtain a measure that reflects particularly large selective effects---that is, purifying selection sufficiently strong that new mutations are lethal or near lethal, and are therefore unable to appear even as rare variants in a panel of tens of thousands of individuals.  As shorthand, we refer to such selection as ``ultraselection,'' using a phrase that echoes---but, as we will show, is quite distinct from---the nearly complete ``ultraconservation'' of sequences over hundreds of millions of years of evolution \cite{BEJEETAL04}.
+We apply ExtRaINSIGHT to more than 70,000 whole genome sequences from the Genome Aggregation Database (gnomAD) project (https://gnomad.broadinstitute.org/) \cite{KARCETAL20} and perform a comprehensive analysis of ultraselection in the human genome, considering diverse coding and noncoding elements.  Our findings reveal both similarities and striking differences in measures of ultraselection and weaker purifying selection, shed light on genetic load in humans, and highlight challenges in accurately modeling mutation rates in upstream regions of genes.
 
 
 %%%%
@@ -181,7 +154,7 @@ characterize the presence of very strong selection
 
 The conceptual basis of ExtRaINSIGHT is straightforward: as noted, the method attempts to measure the fractional reduction in the presence of rare variants in a target set of sites relative to nearby sites that are putatively free from (direct) effects of natural selection.  
 
-In this way, the method is analogous to classical divergence-based approaches \cite{}
+In this way, the method is analogous to classical divergence-based approaches \cite{X}
 %such as the measurement of Ka/Ks (or dn/ds) from alignments of divergent protein-coding sequences or of XXXX (Crow),
 as well as to newer methods that compare target sets of noncoding elements with suitable background sequences in terms of divergence (CITE phastCons, phyloP, GERP), polymorphism (CITE Ekta, Huang, others), or polymorphism and divergence (CITE INSIGHT, LASSIE),
 
