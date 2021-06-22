@@ -175,48 +175,53 @@ denoted $P_i$
 
 %%%
 
-In the absence of natural selection, we assume a  binomial sampling model for the presence (probability $P_i$) or absence (probably $1-P_i$) of a rare variant at each site $i$, excluding sites at which common variants occur (similar to.... GNOMAD).
-where $P_i$ is determined by the local sequence context and local rate constant.  Assuming independence, the probability of a collection of nucleotide sites is given by,
+In the absence of natural selection, we assume a  binomial sampling model for the presence (probability $P_i$) or absence (probably $1-P_i$) of a rare variant at each site $i$, where $P_i$ reflects the local sequence context and overall rate of mutation.  In this calculatrion, we exclude sites at which common variants occur (similar to \cite{SAMOETAL14,LEKETAL16}).
+Assuming independence, the probability of a collection of nucleotide sites is given by,
 \begin{equation}
 P(\mathbb{Y}; \mathbb{P}) = \prod_i P_i^{Y_i}(1-P_i)^{1-Y_i}
 \end{equation}
-\noindent where $Y_i$ is an indicator variable for the presence of a rare variant at position $i$ in the sample.
+\noindent where $Y_i$ is an indicator variable for the presence of a rare variant at position $i$ in the sample, $\mathbb{Y} = \{Y_i\}$, $\mathbb{P} = \{P_i\}$,  and the product excludes sites having common variants.
 
-We then assume that natural selection has the effect of imposing a fractional reduction on the rate at which rare variants occur.  that is,....
+We then assume that natural selection has the effect of imposing a fractional reduction on the rate at which rare variants occur; that is, we define the likelihood function as,
 \begin{equation}
   P(\mathbb{Y}; \lambda_s, \mathbb{P}) = \prod_i \left[(1-\lambda_s) P_i\right]^{Y_i}\left[1- (1-\lambda_s) P_i\right]^{1-Y_i}
 \end{equation}
-\noindent where $\lambda_s$ is the scale factor capturing a depletion of rare genetic variation.  Assuming the $P_i$ values are pre-estimated, a maximum-likelihood estimate (MLE) of $\lambda_s$ can be obtained in closed form (see Methods).
-
-When $\lambda_s$ falls between 0 and 1 it can be interpreted as a measure of the prevalence of strong purifying selection,
-i.e., selection sufficiently strong that mutations are either lethal and never occur or tend to be eliminated within a few generations and are never allowed to drift to appreciable frequency
-This value can be thought of as fraction of sites intolerant to heterozygous mutants, although in practice, some sites may be more, and some sites less, intolerant
-
-Notice, however, that $\lambda_s$ can also take values $<0$
-suggesting that rare variants are occurring at a higher-than-expected rate in a target set of sites
-As we discuss below, we do observe a systematic tendency for lambda to take negative values in particular classes of sites, likely reflecting the difficulty of precisely specifying the mutational model at these sites.
-Across most of the genome, however, estimates of lambda fall between 0 and 1 and show general qualitative agreement with what is expected for various types of functional elements.
+\noindent where $\lambda_s$ is a scale factor capturing a depletion of rare genetic variation.  Assuming the $P_i$ values are pre-estimated, a maximum-likelihood estimate (MLE) of $\lambda_s$ can be obtained in closed form (see {\bf Methods}).
+% need to show this
+When $\lambda_s$ falls between 0 and 1 it can be interpreted as a measure of the prevalence of ``ultraselection,''
+i.e., purifying selection sufficiently strong that new mutations are either lethal or tend  to be eliminated within a few generations.
+In this case, $\lambda_s$ can be thought of as the fraction of sites intolerant to heterozygous mutants, although in practice, some sites may be more, and some sites less, intolerant.
+Notice, however, that $\lambda_s$ can also take values $<0$ if
+rare variants occur at a higher-than-expected rate in the target set of sites.
+As we discuss below, we do observe a systematic tendency for $\lambda_s$ to take negative values in particular classes of sites, likely reflecting the difficulty of precisely specifying the mutational model at these sites.
+Across most of the genome, however, estimates of $\lambda_s$ fall between 0 and 1 and show general qualitative agreement with other measures of purifying selection.
 
 %---
 %(now switch to popgen theory)
-Notably, in the case of strong selection against heterozygotes and mutation-selection balance (as studied by [refs]),
-a relatively simple nonlinear relationship can be established between $\lambda_s$ and the (average) site-specific selection coefficient against heterozygous mutations, $s_h$:    ......     [maybe leave constants vague]     [show in a figure]
-where $c$ is a constant that depends on the relative values of the per-generation mutation rate and the rate of presence of rare variants, $P_i$ (see Methods).
-% just say ratio
+Notably, in the case of strong selection against heterozygotes and mutation-selection balance (as detailed by \cite{CASSETAL17,FULLETAL19}),
+a relatively simple relationship can be established between $\lambda_s$ and the site-specific selection coefficient against heterozygous mutations, $s_{\text{het}}$:
 
-Following the example of Weghorn et al., we carried out a series of simulations 
-under various values of $s_h$, 
-a plausible demographic model (?)
-and found that this approximate relationship was fairly accurate down to about $s_h = 10^{-2}$ (check)
+\begin{equation}
+  s_{\text{het}} = \frac{2N/c}{1-\lambda_s},
+  \label{eq:s-lambda}
+  \end{equation}
+  where $N$ is the number of diploid individuals sampled and $c$ is the (constant for a given data set) ratio of the rate of presence of rare variants in the sample ($P_i$) to the per-generation mutation rate (see {\bf Methods}).
+When $s_{\text{het}}$ varies across sites (as we expect), equation \ref{eq:s-lambda} provides an estimate for the harmonic mean, not the arithmetic mean, of $s_{\text{het}}$.  However,
+in this case, by estimating the variance of $\lambda_s$, it is possible to obtain an approximate arithmetic mean for $s_{\text{het}}$ (see {\bf Methods}).
+
+Following the example of ref.\ \cite{WEGHETAL19}, we carried out a series of simulations 
+under a realistic demographic model  and various values of $s_{\text{het}}$, 
+and found that we could estimate $s_{\text{het}}$ fairly accurately down to about $s_{\text{het}} = 10^{-2}$.
+% CHECK!
 The observation parallels and is similar to the one reported by Weghorn et al. but.... [differences]
-In addition, we  found that the estimator was reasonably robust to variation across sites in mutation rate and in $s_h$ (Suppl Figs)   [other stuff], serving as a good indicator of the average $s_h$ at the target set of sites in such cases
+% allows for variation in s_h across sites.  Different method for pooling across sites.
 Thus, for values of $\lambda_s$ larger than about 0.15 (CHECK), we can obtain a good estimate of the corresponding average sitewise selection coefficient.
 %[indicate on the plot the approximate threshold of interest]
 
 \subsection*{ExtRaINSIGHT is consistent with other measures of strong coding constraint}
 As a validation for ExtRaINSIGHT we compared it with another method for detecting genes that were intolerant to heterozygous loss of function (LoF) variants, pLI. Genes were classified as rare variant tolerant (pLI $\leq 0.1$) or intolerant (pLI $\geq 0.9$). ExtRaINSIGHT found similar results to pLI using all CDS sites, with a larger fraction of sites being intolerant of heterozygous variants in genes that were classified as rare variant intolerant by pLI.  (As a secondary validation do we want to estimate per gene extraINSIGHT scores and show they similar, but probably slightly worse than pLI at prioritizing known recessive disease genes?) 
 
-We then sought to estimate the relative fraction of sites under strong vs. weak selection by taking the ratio of $\lambda_s$ and $\rho$, a measure of the combined fraction of weak and strong selection presented in INSIGHT (cite). This ratio serves two purposes (1) de-convolving the relative contributions of weak and strong selection to the observed pattern of polymorphism and (2) controlling for the fraction of sites under purifying selection, allowing for more rigorous comparisons across annotations of varying quality. To have a baseline against which to compare the relative roles of weak and strong selection we estimate $\rho$ and $\lambda_s$ for coding and non-coding regions on a random subset of fifteen million sites for each. Using INSIGHT2 we find estimates of generalized purifying selection ( $\rho$ ) of $0.62$ for coding regions and $0.07$ consistent with previous findings. Applying ExtRaINSIGHT, we obtained estimates of $0.145$ and $0.008$ for the fraction of sites under ultra-strong selection for coding and non-coding sites, respectively. By taking the ratio $\frac{\lambda_s}{\rho}$, we find that $23.3\%$ of sites under purifying selection are under ultra-strong selection. In contrast the same calculation for non-coding elements results in an estimate of only $11.5\%$. Thus we find that strong selection is roughly twice as prevalent in coding elements as non-coding elements.
+We then sought to estimate the relative fraction of sites under strong vs.\ weak selection by taking the ratio of $\lambda_s$ and $\rho$, a measure of the combined fraction of weak and strong selection presented in INSIGHT (cite). This ratio serves two purposes (1) de-convolving the relative contributions of weak and strong selection to the observed pattern of polymorphism and (2) controlling for the fraction of sites under purifying selection, allowing for more rigorous comparisons across annotations of varying quality. To have a baseline against which to compare the relative roles of weak and strong selection we estimate $\rho$ and $\lambda_s$ for coding and non-coding regions on a random subset of fifteen million sites for each. Using INSIGHT2 we find estimates of generalized purifying selection ( $\rho$ ) of $0.62$ for coding regions and $0.07$ consistent with previous findings. Applying ExtRaINSIGHT, we obtained estimates of $0.145$ and $0.008$ for the fraction of sites under ultra-strong selection for coding and non-coding sites, respectively. By taking the ratio $\frac{\lambda_s}{\rho}$, we find that $23.3\%$ of sites under purifying selection are under ultra-strong selection. In contrast the same calculation for non-coding elements results in an estimate of only $11.5\%$. Thus we find that strong selection is roughly twice as prevalent in coding elements as non-coding elements.
 
 With this genome-wide baseline in hand we do the same calculation for the two categories of pLI genes previously described. Not only do genes high pLI scores show larger fraction of sites under purifying selection than those with low scores ($\sim 0.76$ vs. $\sim 0.6$), sites that are under purifying selection are roughly two and half times as likely to be under ultra-strong selection. This is consistent with the expectation organismal fitness is less impacted by single copy mutations in genes with low pLI, even those in functionally important sites, than those with high pLI scores.
 
