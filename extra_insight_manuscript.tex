@@ -184,7 +184,7 @@ P(\mathbb{Y}; \mathbb{P}) = \prod_i P_i^{Y_i}(1-P_i)^{1-Y_i}
 
 We then assume that natural selection has the effect of imposing a fractional reduction on the rate at which rare variants occur; that is, we define the likelihood function as,
 \begin{equation}
-  P(\mathbb{Y}; \lambda_s, \mathbb{P}) = \prod_i \left[(1-\lambda_s) P_i\right]^{Y_i}\left[1- (1-\lambda_s) P_i\right]^{1-Y_i}
+\mathcal{L}(\lambda_s; \mathbb{Y}, \mathbb{P}) =  P(\mathbb{Y}; \lambda_s, \mathbb{P}) = \prod_i \left[(1-\lambda_s) P_i\right]^{Y_i}\left[1- (1-\lambda_s) P_i\right]^{1-Y_i}
 \end{equation}
 \noindent where $\lambda_s$ is a scale factor capturing a depletion of rare genetic variation.  Assuming the $P_i$ values are pre-estimated, a maximum-likelihood estimate (MLE) of $\lambda_s$ can be obtained in closed form (see {\bf Methods}).
 % need to show this
