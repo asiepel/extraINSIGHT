@@ -122,7 +122,7 @@ and rates of protein-truncating variants at dominant or X-linked disease-associa
 
 Nevertheless, these strategies have some important limitations.  In particular, patterns of variation are strongly influenced by demographic history, especially by population bottlenecks, expansions, and substructure, so that careful demographic modeling is required to isolate the effects of selection.  In addition, the population panels that are typically available---consisting of hundreds to a few thousand individuals---are informative about only a relatively narrow slice of the DFE.  For example, in humans strong purifying selection (such that $s$ is larger than $\sim$1\%) will tend to hold variants to such low frequencies in the population that they will not be reliably detectable in these panels, whereas weak purifying selection (such that $s$ is on the order of $10^{-4}$ or less) will be indistinguishable from random genetic drift.  Thus, only in approximately the range $10^{-4} < s < 10^{-2}$  is there any hope of accurately measuring the strength of purifying selection.
 
-In recent years, several large consortium projects have released public genome sequence data (either at the exome or the whole-genome level) for several thousand human individuals \cite{FUETAL13,1KGCONS15,LEKETAL16,KARCETAL20}.  The largest of these data sets now span many tens of thousands \cite{LEKETAL16,KARCETAL20}, allowing quite rare variants (with relative frequencies  $<10^{-3}$) to be identified with reasonable confidence.  With this capability in mind, a number of statistical methods have been developed to measure high levels of purifying selection against loss-of-function mutations for protein-coding genes, by comparing the frequencies of predicted loss-of-function (pLoF) variants to their mutation-rate-based expectation \cite{PETRETAL13,LEKETAL16,KARCETAL20,CASSETAL17,HAVRETAL19}.
+In recent years, several large consortium projects have released public genome sequence data (either at the exome or the whole-genome level) for several thousand human individuals \cite{FUETAL13,1KGCONS15,LEKETAL16,KARCETAL20}.  The largest of these data sets now span many tens of thousands \cite{LEKETAL16,KARCETAL20}, allowing quite rare variants (with relative frequencies  $<10^{-3}$) to be identified with reasonable confidence.  With this capability in mind, a number of statistical methods have been developed to measure high levels of purifying selection against loss-of-function mutations for protein-coding genes, by comparing the frequencies of predicted loss-of-function (pLoF) variants to their mutation-rate-based expectation \cite{PETRETAL13,SAMOETAL14,LEKETAL16,KARCETAL20,CASSETAL17,HAVRETAL19}.
 Perhaps the most widely used of these are the ``probability of being loss-of-function intolerant'' (pLI) measure, and its successor, the loss-of-function observed/expected upper bound fraction (LOEUF) measure, both of which have been shown to reliably distinguish null (unconstrained), autosomal recessive, and haploinsufficient genes and to be associated with a number of other measures of molecular function and disease association \cite{LEKETAL16,KARCETAL20}.
 
 While these measures are correlated with dominance effects, the frequency of rare pLoF variants is strictly informative only about the strength of selection against hetereozygous mutations, here denoted $s_{\text{het}}$~\cite{FULLETAL19}.  When purifying selection is strong and near-complete recessivity can be excluded, mutation-selection balance is expected to hold with an equilibrium frequency for a rare variant of $q \approx \frac{\mu}{s_{\text{het}}}$, where $\mu$ is the deleterious mutation rate \cite{HALD37,FULLETAL19}.  Indeed, Cassa et al.\ \cite{CASSETAL17} and Weghorn et al.\ \cite{WEGHETAL19} have shown with extensive simulations that this relationship holds quite well for pLoF variants in the ExAC exome data \cite{LEKETAL16} down to $s_{\text{het}} \approx 0.01$.  Their approach allows for direct estimation of selection coefficients as large as $s_{\text{het}} =0.3$ or more, and they identified thousands of human genes with estimated $s_{\text{het}} >0.1$ for pLoF.
@@ -152,17 +152,16 @@ We apply ExtRaINSIGHT to more than 70,000 whole genome sequences from the Genome
 
 \subsection*{Overview of ExtRaINSIGHT}
 
-The conceptual basis of ExtRaINSIGHT is straightforward: as noted, the method attempts to measure the fractional reduction in the presence of rare variants in a target set of sites relative to nearby sites that are putatively free from (direct) effects of natural selection.  
+% shorten some of this?  overlaps with intro
+The conceptual basis of ExtRaINSIGHT is straightforward.  As noted, the method measures the fractional reduction in the presence of rare variants in a target set of sites relative to nearby sites that are putatively free from (direct) effects of natural selection.  In this way, it is analogous to classical strategies for measuring selection in protein-coding genes \cite{LIETAL81,KIMU83,KONDCROW93}, as well as to newer methods that compare target sets of noncoding elements with suitable background sequences \cite{SIEPETAL05,COOPETAL05,GAFFETAL08,ARBIETAL13}.  The focus on rare variants (here, variants with minor allele frequencies of $< 0.1$\%), however, enables the method to focus in particular on mutations of large selective effect.
 
-In this way, the method is analogous to classical divergence-based approaches \cite{X}
-%such as the measurement of Ka/Ks (or dn/ds) from alignments of divergent protein-coding sequences or of XXXX (Crow),
-as well as to newer methods that compare target sets of noncoding elements with suitable background sequences in terms of divergence (CITE phastCons, phyloP, GERP), polymorphism (CITE Ekta, Huang, others), or polymorphism and divergence (CITE INSIGHT, LASSIE),
+The main challenge in this approach stems from the high sensitivity of relative rates of rare variants to variation in mutation rate.  To address this problem, we follow refs.\ \cite{SAMOETAL20,LEKETAL16} in building a mutational model that accounts for both sequence context and regional variation in mutation rate.
 
-but the focus on rare variants (here, variants with minor allele frequencies of $< 0.1$\%) enables the method to shed light on mutations of large selective effect.
-
-The main challenge in this approach stems from the high sensitivity of relative rates of rare variants to variation in mutation rate.  To address this problem, we follow Lek et al...... (others?)
-and make use of a 
+In our case
+make use of a 
 hexamer model.....
+(compared with tri-nucleotide....?)
+extend to 3 nucleotides on each side.....?
 
 In addition, following our earlier work (cite), we use a local control for mutation rate
 by identifying collections of sites likely to be neutrally evolving (by liberally excluding annotated functional elements and other sites likely to be under selection; see Methods)
@@ -191,6 +190,8 @@ We then assume that natural selection has the effect of imposing a fractional re
 When $\lambda_s$ falls between 0 and 1 it can be interpreted as a measure of the prevalence of strong purifying selection,
 i.e., selection sufficiently strong that mutations are either lethal and never occur or tend to be eliminated within a few generations and are never allowed to drift to appreciable frequency
 This value can be thought of as fraction of sites intolerant to heterozygous mutants, although in practice, some sites may be more, and some sites less, intolerant
+
+(work in?  as we will see, lambda will generally take values lower than the analogous quantity, rho, estimated by INSIGHT, because lambda measures sites under ``ultra-selection'' only, while rho also includes sites under weaker purifying selection)
 
 Notice, however, that $\lambda_s$ can also take values $<0$
 suggesting that rare variants are occurring at a higher-than-expected rate in a target set of sites
