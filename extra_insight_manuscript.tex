@@ -205,12 +205,41 @@ Thus, for values of $\lambda_s$ larger than about 0.15 (CHECK), we can obtain a 
 \subsection*{ExtRaINSIGHT scores for protein-coding sequences are concordant with other measures of purifying selection}
 
 % short paragraph.  findings straightforward.  mostly validation
-We ran ExtRaINSIGHT on protein coding sequences from GENCODE
+We ran ExtRaINSIGHT on protein-coding sequences from GENCODE [ref]
+% give number
+as well as on a variety of sequences associated with them
+including $5'$ and $3'$ untranslated regions (UTRs), promoters,
+and splice sites.
 
-For comparison, we also ran INSIGHT
+Table \ref{tab:features}
 
-we expect the two measures to be correlated
-but INSIGHT's rho estimate should generally be larger, because it considers weak as well as strong purifying selection
+We also separately considered subsets of protein-coding nucleotides falling in fourfold (4d) and zero-fold (0d) degenerate positions, at which all mutations are synonymous and nonsynonymous, respectively.
+
+For comparison, we also ran INSIGHT on the same collections of sites.
+
+We expected the quantities $\lambda_s$ (from ExtRaINSIGHT) and $\rho$ (from INSIGHT) to be correlated, because both can be interpreted as fractions of sites subject to purifying selection,
+but we anticipated that, in most cases, $\lambda_s < \rho$, because $\lambda_s$ is a measure of extremely strong purifying selection, whereas $\rho$ considers weak as well as strong selection.  
+
+
+Indeed, we found this to be true in all cases.
+
+The strongest selection, by far, occurred in splice sites, where
+...
+next CDS
+15\% of sites subject to ultra-selection
+and 62\% of sites subject to selection
+
+
+
+however the ratio of $\lambda_s$ to $\rho$ varied considerably
+suggesting major differences in the relative proportions of weakly and strongly selected sites
+
+In particular,
+in splice sites the 
+
+
+We also found that 
+a persistent tendency for negative estimates of $\lambda_s$ at regions near the $5'$ ends of genes, most strongly at $5'$ UTRs and proximal promoters, but also carrying into the extended promoter region.  As we discuss in a later section, this tendency appears to be a consequence of unusual mutational patterns in these regions that are difficult to accommodate using even our regional and neighbor-dependent mutation model.
 
 
 We found....
@@ -326,21 +355,24 @@ ExtRaINSIGHT and INSIGHT2 scores can be computed for a set of annotations using 
 \clearpage 
 
 \begin{sidewaystable}
+  \caption{Measures of purifying selection on various genomic features}
+  \vspace{2ex}
+  \label{tab:features}
 %  \begin{minipage}{10in}
 %  \begin{table}
     \centering
   \begin{footnotesize}
   \begin{tabular}{lrrrrrrrrr}
   \hline
-  Feature	& $\lambda$ & $\pm$ (stderr) & $\rho$ & $\pm$ (stderr) &no.\ sites & prop.\ sites&	exp no. US\footnote{Expected number of ultraselected sites after adjusting for background (see Methods).} & exp.\ prop.\ US\footnote{Expected proportion of ultraselected sties after adjusting for background.}&exp. lethal mut.\footnote{Expected number of lethal or near-lethal mutations per diploid individual, assuming a mutation rate of $1.2\times 10^8$ per generation per site.}\\
+  Feature	& $\lambda_s$ & $\pm$ (stderr) & $\rho$ & $\pm$ (stderr) &no.\ sites & prop.\ sites&	exp no. US\footnote{Expected number of ultraselected sites after adjusting for background (see Methods).} & exp.\ prop.\ US\footnote{Expected proportion of ultraselected sties after adjusting for background.}&exp. lethal mut.\footnote{Expected number of new lethal or near-lethal mutations per diploid individual, assuming a mutation rate of $1.2\times 10^8$ per generation per site.}\\
   \hline
 CDS & 0.1487 & 0.0016 & 0.6244 & 0.0199 & 33838326 & 1.1770\% & 4890375.8 & 31.27\% & 0.1174\\
 UCNE & 0.0887 & 0.0017 & 0.7591 & 0.0146 & 1406551 & 0.0489\% & 118824.6 & 0.76\% & 0.0029\\
 HAR & 0.0418 & 0.0022 & 0.0035 & 0.0015 & 635530 & 0.0221\% & 23877.6 & 0.15\% & 0.0006\\
 5$'$ UTR & $-$0.1600 & 0.0017 & 0.1866 & 0.0302 & 8205324 & 0.2854\% & 0.0 & 0.00\% & 0.0000\\
 3$'$ UTR & 0.0253 & 0.0017 & 0.2186 & 0.0323 & 35918770 & 1.2493\% & 756637.4 & 4.84\% & 0.0182\\
-promotor & $-$0.1287 & 0.0019 & 0.1269 & 0.0336 & 993544 & 0.0346\% & 0.0 & 0.00\% & 0.0000\\
-ext. promotor  & $-$0.0323 & 0.0017 & 0.1077 & 0.0307 & 1995490 & 0.0694\% & 0.0 & 0.00\% & 0.0000\\
+promoter\footnote{First XX sites upstream of annotated transcription start site (TSS).} & $-$0.1287 & 0.0019 & 0.1269 & 0.0336 & 993544 & 0.0346\% & 0.0 & 0.00\% & 0.0000\\
+ext.\ promoter \footnote{Next YY sites upstream of TSS.}& $-$0.0323 & 0.0017 & 0.1077 & 0.0307 & 1995490 & 0.0694\% & 0.0 & 0.00\% & 0.0000\\
 splice & 0.4822 & 0.0017 & 0.8989 & 0.0128 & 741541 & 0.0258\% & 354460.7 & 2.27\% & 0.0085\\
 miRNA cons.\ seed & 0.3887 & 0.0311 & 0.8339 & 0.2642 & 2626 & 0.0001\% & 1009.7 & 0.01\% & 0.0000\\
 miRNA cons.\ nonseed & 0.3142 & 0.0245 & 0.8946 & 0.1676 & 4554 & 0.0002\% & 1411.9 & 0.01\% & 0.0000\\
@@ -353,7 +385,7 @@ snoRNA & $-$0.0710 & 0.0068 & 0.1524 & 0.0817 & 73160 & 0.0025\% & 0.0 & 0.00\% 
 intron & 0.0115 & 0.0017 & 0.0714 & 0.0232 & 1014637799 & 35.2913\% &  7372341.1 & 47.15\% & 0.1769\\
 intergenic & 0.0042 & 0.0017 & 0.0599 & 0.0242 & 1300257760 & 45.2257\% & 0.0 & 0.00\% & 0.0000\\
     \hline
-Total &  &  &  &  & & & 15637579.7 &  & 0.3753\\
+Total &  &  &  &  & 2875043734 & 100.0000\% & 15637579.7 &  100.00\% & 0.3753\\
     \hline
   \end{tabular}
   \end{footnotesize}
