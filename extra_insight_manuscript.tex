@@ -10,7 +10,7 @@
 \usepackage{authblk}
 \usepackage{cite}
 
-\usepackage{pdflscape}
+\usepackage{rotating}
 
 %\documentclass[times, twoside, watermark]{zHenriquesLab-StyleBioRxiv}
 %\usepackage{booktabs}
@@ -325,12 +325,14 @@ ExtRaINSIGHT and INSIGHT2 scores can be computed for a set of annotations using 
 
 \clearpage 
 
-\begin{landscape}
-\begin{table}
+\begin{sidewaystable}
+%  \begin{minipage}{10in}
+%  \begin{table}
+    \centering
   \begin{footnotesize}
   \begin{tabular}{lrrrrrrrrr}
   \hline
-  Feature	& $\lambda$ & $\sigma_\lambda$ &	$\rho$ & $\sigma_\rho$	&no.\ sites	& prop.\ sites&	exp no. US sites & exp. prop. US sites &exp. no. lethal mut.\footnote{Lethal or near-lethal mutations per diploid individual, assuming a mutation rate of $1.2\times 10^8$ per generation per site.}\\
+  Feature	& $\lambda$ & $\pm$ (stderr) & $\rho$ & $\pm$ (stderr) &no.\ sites & prop.\ sites&	exp no. US\footnote{Expected number of ultraselected sites after adjusting for background (see Methods).} & exp.\ prop.\ US\footnote{Expected proportion of ultraselected sties after adjusting for background.}&exp. lethal mut.\footnote{Expected number of lethal or near-lethal mutations per diploid individual, assuming a mutation rate of $1.2\times 10^8$ per generation per site.}\\
   \hline
 CDS & 0.1487 & 0.0016 & 0.6244 & 0.0199 & 33838326 & 1.1770\% & 4890375.8 & 31.27\% & 0.1174\\
 UCNE & 0.0887 & 0.0017 & 0.7591 & 0.0146 & 1406551 & 0.0489\% & 118824.6 & 0.76\% & 0.0029\\
@@ -355,9 +357,10 @@ Total &  &  &  &  & & & 15637579.7 &  & 0.3753\\
     \hline
   \end{tabular}
   \end{footnotesize}
-\end{table}
-\end{landscape}
-
+\end{sidewaystable}
+%\end{minipage}
+%\end{landscape}
+\clearpage
 
 \begin{figure*}[t]
     \centering
