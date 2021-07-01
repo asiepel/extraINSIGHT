@@ -224,32 +224,31 @@ but we anticipated that, in most cases, $\lambda_s < \rho$, because $\lambda_s$ 
 Indeed, we found this to be true in all cases.
 
 The strongest selection, by far, occurred in splice sites, where
-...
-next CDS
-15\% of sites subject to ultra-selection
+48\% of sites were subject to ultra-selection, in comparison with 90\% of sites subject to weak or strong selection.
+
+Coding sequences (CDS) showed reduced but still considerable purifying selection, with 
+15\% of sites subject to ultraselection
 and 62\% of sites subject to selection
 
+In $3'$ UTRs, the fraction of ultraselected dropped considerably to 2.5\%, despite that 22\% of sites showed evidence of some type of selection
 
-then UTR and promoter
 
 %%%%
-We also found that 
+By contrast (?)
+we observed
 a persistent tendency for negative estimates of $\lambda_s$ at regions near the $5'$ ends of genes, most strongly at $5'$ UTRs and proximal promoters, but also carrying into the extended promoter region.  As we discuss in a later section, this tendency appears to be a consequence of unusual mutational patterns in these regions that are difficult to accommodate using even our regional and neighbor-dependent mutation model.
 
 
 %%%
 
-interestingly the ratio of $\lambda_s$ to $\rho$ varied considerably
+% show the ratio in the table?
+Interestingly the ratio of $\lambda_s$ to $\rho$ varied considerably across regions
 suggesting major differences in the relative proportions of weakly and strongly selected sites
 
-In particular,
-in splice sites the
-enriched strong
+In particular, in splice sites this ratio exceeded 0.5, suggesting that more than half of functional sites were ultraselected,
+whereas it dropped to 0.24 in CDS and, further, to 0.12 in $3'$ UTRs.
 
-CDS intermediate
-
-UTR ultraselection largely absent, despite considerable fractions selected
-similar promoters
+These observations suggest dramatically different distributions of fitness effects even within the fraction of sites subject to selection in these genomic regions.
 
 
 
@@ -260,21 +259,32 @@ similar promoters
 
 %%%%
 
-Next we examined
-deciles by LOEUF score
-which is also based on rare variants but pools together sites per gene
-and uses a z-score transformation (?)
-whereas our method pools together heterogeneous sets of sites
-In addition, LOEUF is a measure at the level of whole genes, while ExtRaINSIGHT produces a measure of the fraction of sites subject to ultraselection.
-We ran ExtRaINSIGHT once per decile grouping, obtaining a single estimate for all genes in each category
-We found.....
-good correlation with LOEUF decile
-monotonically decreasing; significant differences between all consecutive deciles (check)
-ranging from lambda of just less than 0.3 to lambda close to 0
-the INSIGHT rho measure was also well correlated, ranging from just under 0.8 to about 0.45
-as expected considerably larger
-somewhat more variable per category (why?  more latent variables.  more complicated model)
-these results suggest that in the 10\% of genes under the weakest selection against heterozygous loss of function mutations,
+To see whether ExtRaINSIGHT was capable of distinguishing among protein-coding sequences experiencing different levels of selection against heterozygous loss-of-function variants
+we compared it with the recently introduced loss-of-function observed/expected upper bound fraction (LOEUF) measure \cite{KARCETAL20}.
+
+LOEUF is similarly based on rare variants
+but it differs from ExtRaINSIGHT in several key ways:
+it is computed separately for each gene
+pools together all mutations predicted to result in loss of function of that gene (including nonsense mutations, mutations that disrupt splice sites, ......)
+and uses a z-score transformation (check)
+
+By contrast, $\lambda_s$ is computed for pooled collections of sites from coding or noncoding sites distributed across the genome
+and represents a fraction of sites subject to ultraselection
+
+To compare the two, we divided all genes [which set?]
+into deciles by LOEUF score and ran ExtRaINSIGHT separate on the pooled coding sites corresponding to each decile.
+
+Again, we computed $\rho$ values using INSIGHT together with the $\lambda_s$ values.
+
+We found that both $\rho$ and $\lambda_s$ decreased monotonically with LOEUF decile
+% would it make more sense to define the deciles in the reverse order?   higher score more conserved?
+with $\lambda_s$ ranging from slighly less than 0.3 for the genes having the highest (?) LOEUF scores
+to slightly more than 0 for the genes having the lowest LOEUF scores.
+As expected, $\rho$ was considerably larger, ranging from just under 0.8 to about 0.45
+
+%somewhat more variable per category (why?  more latent variables.  more complicated model)
+
+These results suggest that in the 10\% of genes under the weakest selection against heterozygous loss of function mutations,
 about 45\% of nucleotides are still subject to weak to modest purifying selection but only XX\% are subject to ultraselection;
 whereas in the 10\% of genes under the strongest selection against heterozygous LoF mutations, about 75\% of nucleotides are subject to weak to modest purifying selection and almost 30\% are under ultraselection.  
 
@@ -285,8 +295,8 @@ considered an alternative grouping of genes by top-level Reactome.... (see below
 Again, we ran both ExtRaINSIGHT and INSIGHT on them
 We found....
 good correlation between measures
-range from about 10\% to 25\% for lambda
-and from 60 to 75\% for rho (check)
+range from about 10\% to 25\% for $\lambda_s$
+and from 60 to 75\% for $\rho$ (check)
 strongest selection in neuronal system.  similar to.... [other similar findings]
 weakest in reproduction [other similar findings]
 % check for others based on pLI in particular
